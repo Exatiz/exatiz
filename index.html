@@ -376,7 +376,7 @@
         
         <div id="view-login" class="relative z-10 w-full max-w-sm mx-auto animate-fade-in">
             <div class="text-center mb-8">
-                <img src="logo-exatiz.png" alt="Logo Exatiz" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
+                <img src="Icone_Exatiz_Transp - cópia.png" alt="Logo Exatiz" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
                 <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight">Exatiz</h1>
                 <p class="text-slate-400 text-xs mt-1">Sua plataforma de alta performance.</p>
             </div>
@@ -5688,14 +5688,17 @@ async function iniciarSimuladoDiretoDeTopico(topico, origem) {
 }
 
 // Salva o progresso do perfil (XP, Nível, Sequência) no Supabase
+// --- SISTEMA DE SINCRONIZAÇÃO (SYNC ENGINE) ---
+
+// 1. UPLOAD: Envia o progresso local para o Supabase (Salvar)
 async function salvarProgressoNuvem() {
     if (!supabaseClient) return;
 
-    // 1. Pega os dados vitais da memória local
+    // Mapeamos: JS (português) -> Banco (inglês)
     const payload = {
         xp: ESTADO.usuario.xp,
-        level: ESTADO.usuario.nivel || 1,
-        streak: ESTADO.usuario.sequencia || 0,
+        level: ESTADO.usuario.nivel,      // Salva 'nivel' na coluna 'level'
+        streak: ESTADO.usuario.sequencia, // Salva 'sequencia' na coluna 'streak'
         updated_at: new Date()
     };
 
@@ -5703,19 +5706,51 @@ async function salvarProgressoNuvem() {
         const { data: { user } } = await supabaseClient.auth.getUser();
         if (!user) return;
 
-        // 2. Envia para a tabela 'profiles'
         const { error } = await supabaseClient
             .from('profiles')
             .update(payload)
             .eq('id', user.id);
 
         if (error) throw error;
-        // console.log("☁️ Progresso (XP) sincronizado com a nuvem.");
+        // console.log("☁️ Nuvem atualizada."); // Comentado para não poluir console
 
     } catch (e) {
-        console.error("Erro ao salvar XP na nuvem:", e);
-        // Não alertamos o usuário para não interromper o fluxo, 
-        // tentaremos de novo na próxima chamada.
+        console.error("Erro no Sync Upload:", e);
+    }
+}
+
+// 2. DOWNLOAD: Baixa do Supabase e atualiza o local (Carregar)
+async function carregarProgressoNuvem() {
+    if (!supabaseClient) return;
+
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) return;
+
+        const { data: profile, error } = await supabaseClient
+            .from('profiles')
+            .select('xp, level, streak')
+            .eq('id', user.id)
+            .single();
+
+        if (error) throw error;
+
+        if (profile) {
+            // Lógica de Conflito: O banco SEMPRE vence se tiver mais XP
+            // (Isso evita que um cache antigo zere o progresso)
+            if ((profile.xp || 0) > ESTADO.usuario.xp) {
+                console.log("📥 Baixando progresso da nuvem...");
+                ESTADO.usuario.xp = profile.xp || 0;
+                ESTADO.usuario.nivel = profile.level || 1;     // Banco 'level' -> JS 'nivel'
+                ESTADO.usuario.sequencia = profile.streak || 0; // Banco 'streak' -> JS 'sequencia'
+                
+                // Atualiza visualmente na hora
+                calcularNivel(); 
+                salvarDados(); // Persiste no LocalStorage
+            }
+        }
+    } catch (e) {
+        console.error("Erro no Sync Download:", e);
     }
 }
 
@@ -6129,6 +6164,7 @@ async function salvarProgressoNuvem() {
                      let baseXP = 15; 
                      if (streakAtual >= 3) baseXP = 30;
                      ESTADO.usuario.xp += baseXP; xpSessao += baseXP; acertosSessao++; streakAtual++;
+                     salvarProgressoNuvem()
                 } else { streakAtual = 0; }
             } else {
                 if(acertou) acertosSessao++;
@@ -7093,8 +7129,13 @@ async function dispararGeracaoFlashcards() {
         // --- FUNÇÃO CRÍTICA: RECONSTRUÇÃO DE HISTÓRICO ---
 async function sincronizarProgressoDoUsuario() {
     if (!supabaseClient) return;
+    
+    // --- NOVO: Puxa o XP/Nível da nuvem antes de tudo ---
+    await carregarProgressoNuvem(); 
+    // ---------------------------------------------------
+
     const { data: { user } } = await supabaseClient.auth.getUser();
-    if (!user) return;
+    // ... (restante da função continua igual)
 
     try {
         // 1. Busca TUDO (select *) para garantir que venha a coluna 'complexidade'
