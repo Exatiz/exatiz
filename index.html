@@ -79,17 +79,31 @@
         /* --- NOVAS ANIMAÇÕES V18 (GAME FEEL) --- */
         
         /* Transição suave para o efeito de Glow no Flashcard */
-        #flashcard { transition: all 0.3s ease; }
+        #flashcard {
+    background-color: #ffffff;
+    border-radius: 16px;
+    overflow: hidden;
 
-        /* Efeitos de Glow */
-        .glow-green { box-shadow: 0 0 60px 20px rgba(34, 197, 94, 0.6); }
-        .glow-red { box-shadow: 0 0 60px 20px rgba(239, 68, 68, 0.6); }
+    /* A "BORDINHA" DE ACENTO NO TOPO */
+    border-top: 6px solid #59A6B4;
 
-        @keyframes shake { 
-            0%, 100% { transform: translateX(0); } 
-            25% { transform: translateX(-8px); } 
-            75% { transform: translateX(8px); } 
-        }
+    /* Bordas laterais e inferiores sutis */
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 2px solid #cbd5e1;
+    border-left: 1px solid #e2e8f0;
+
+    /* SOMBRA DE PROFUNDIDADE (O efeito de flutuar) */
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Garante que o card tenha um tamanho bom e centralizado */
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
         .animate-shake { animation: shake 0.4s ease-in-out; }
         
         @keyframes swipeOut { 
@@ -105,6 +119,232 @@
         /* TOAST ANIMATION */
         .toast-visible { opacity: 1 !important; transform: translate(-50%, 0) !important; }
         .toast-hidden { opacity: 0 !important; transform: translate(-50%, -20px) !important; }
+
+        /* Faz os botões aparecerem suavemente com delay */
+.fade-in-buttons {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Transição de entrada do card mais fluida */
+.card-swipe-in {
+    animation: swipeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes swipeIn {
+    from { opacity: 0; transform: translateX(50px) scale(0.9); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+/* Efeito de saída mais rápido */
+.card-swipe-out {
+    animation: swipeOut 0.25s ease-in forwards;
+}
+
+@keyframes swipeOut {
+    to { opacity: 0; transform: translateX(-100px) scale(0.9); }
+}
+
+/* --- NOVAS ANIMAÇÕES DE RESPOSTA --- */
+
+/* Acerto: O card dá um "pulo" para frente e brilha */
+.card-pop-success {
+    animation: popSuccess 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    box-shadow: 0 0 25px rgba(34, 197, 94, 0.6); /* Brilho verde intenso */
+    border-color: rgba(34, 197, 94, 0.8) !important; /* Força a borda verde */
+}
+
+@keyframes popSuccess {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.08); filter: brightness(1.05); } /* O pico do "pulo" */
+    100% { transform: scale(1); filter: brightness(1); } /* Volta ao normal antes de sair */
+}
+
+/* Erro: Uma vibração lateral mais orgânica e suave */
+.card-shake-error {
+    animation: smoothShakeError 0.5s ease-in-out forwards;
+    box-shadow: 0 0 25px rgba(239, 68, 68, 0.6); /* Brilho vermelho intenso */
+    border-color: rgba(239, 68, 68, 0.8) !important; /* Força a borda vermelha */
+}
+
+@keyframes smoothShakeError {
+    0%, 100% { transform: translateX(0); }
+    15% { transform: translateX(-6px) rotate(-0.5deg); }
+    30% { transform: translateX(5px) rotate(0.5deg); }
+    45% { transform: translateX(-4px) rotate(-0.3deg); }
+    60% { transform: translateX(3px) rotate(0.3deg); }
+    75% { transform: translateX(-2px); }
+}
+
+/* --- MANTER AS ANIMAÇÕES ANTERIORES (Entrada/Saída/Botões) --- */
+.fade-in-buttons {
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.card-swipe-in {
+    animation: swipeIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes swipeIn {
+    from { opacity: 0; transform: translateX(50px) scale(0.9); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}
+.card-swipe-out {
+    animation: swipeOut 0.25s ease-in forwards;
+}
+@keyframes swipeOut {
+    to { opacity: 0; transform: translateX(-100px) scale(0.9); }
+}
+
+/* --- REVESTIMENTOS DE RARIDADE (SKINS) --- */
+
+/* BRONZE: Rústico, terroso e sólido */
+.skin-bronze {
+    border-top: 6px solid #d97706 !important; /* Âmbar Escuro */
+    box-shadow: 0 10px 30px -5px rgba(217, 119, 6, 0.25) !important;
+}
+
+/* PRATA: Elegante, frio e tecnológico */
+.skin-prata {
+    border-top: 6px solid #94a3b8 !important; /* Cinza Slate */
+    box-shadow: 0 10px 30px -5px rgba(148, 163, 184, 0.4) !important;
+}
+
+/* OURO: Brilhante, intenso e lendário */
+.skin-ouro {
+    border-top: 6px solid #fbbf24 !important; /* Ouro */
+    /* Sombra dourada mais forte para dar sensação de poder */
+    box-shadow: 0 15px 40px -5px rgba(251, 191, 36, 0.5) !important;
+    border: 1px solid rgba(251, 191, 36, 0.3); /* Borda fina extra */
+}
+
+/* --- EFEITOS VISUAIS DOS VILÕES (ATMOSFERA) --- */
+
+/* Animação para Vilão Crítico (Batimento Cardíaco / Perigo) */
+@keyframes heartbeat-danger {
+    0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); transform: scale(1); }
+    70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); transform: scale(1.02); }
+    100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); transform: scale(1); }
+}
+
+.villain-critical-pulse {
+    animation: heartbeat-danger 2s infinite;
+    border-color: #ef4444 !important; /* Força borda vermelha */
+}
+
+/* Badge de K (O nível de ameaça) */
+.badge-k-score {
+    backdrop-filter: blur(4px);
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(255,255,255,0.6);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Caveira Cambaleante (Vilão Derrotado) */
+@keyframes dizzy-skull {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(15deg) scale(1.1); }
+    75% { transform: rotate(-15deg) scale(1.1); }
+    100% { transform: rotate(0deg) scale(1); }
+}
+.animate-dizzy {
+    animation: dizzy-skull 3s infinite ease-in-out;
+    filter: grayscale(100%);
+}
+
+/* Carimbo Top-Secret "Dominado!" */
+.stamp-dominado {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-12deg);
+    border: 4px solid #16a34a; /* Verde forte */
+    color: #16a34a;
+    font-size: 2.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    padding: 4px 20px;
+    border-radius: 12px;
+    opacity: 0.7;
+    letter-spacing: -2px;
+    pointer-events: none;
+    z-index: 30;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 0 10px rgba(22, 163, 74, 0.2);
+}
+
+/* Efeito de Brilho Dourado para Confiança Máxima */
+.glow-gold {
+    color: #f59e0b; /* Âmbar vibrante */
+    text-shadow: 0 0 8px rgba(245, 158, 11, 0.5); /* Névoa dourada em volta */
+}
+
+/* Botão de Dica (Bússola) */
+.btn-hint {
+    position: relative;
+    color: #64748b; /* Slate 500 */
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.btn-hint:hover {
+    color: #59A6B4; /* Brand */
+    transform: translateY(-2px);
+}
+.btn-hint:active {
+    transform: scale(0.95);
+}
+/* Badge de munição da dica */
+.hint-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #59A6B4;
+    color: white;
+    font-size: 9px;
+    font-weight: 900;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(89, 166, 180, 0.3);
+    border: 1px solid white;
+}
+
+/* Área onde a dica aparece (Texto Socrático) */
+.hint-box {
+    background: #f0f9ff; /* Azul bem clarinho */
+    border-left: 3px solid #59A6B4;
+    padding: 12px;
+    margin-bottom: 16px;
+    border-radius: 0 8px 8px 0;
+    font-size: 13px;
+    color: #334155;
+    font-style: italic;
+    display: flex;
+    gap: 10px;
+    align-items: start;
+    animation: slideInRight 0.3s ease-out;
+}
+
+/* Estado Bloqueado (Cadeado) */
+.btn-locked {
+    color: #cbd5e1; /* Slate 300 (bem apagado) */
+    cursor: not-allowed;
+}
+.btn-unlocked {
+    color: #fbbf24; /* Amber 400 (Luz acesa) */
+    animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
     </style>
 <script type="importmap">
 {
@@ -136,7 +376,7 @@
         
         <div id="view-login" class="relative z-10 w-full max-w-sm mx-auto animate-fade-in">
             <div class="text-center mb-8">
-                <img src="logo-exatiz.png" alt="Logo Exatiz" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
+                <img src="Icone_Exatiz_Transp - cópia.png" alt="Logo Exatiz" class="h-20 w-auto mx-auto mb-4 drop-shadow-lg">
                 <h1 class="text-3xl font-extrabold text-brand-dark tracking-tight">Exatiz</h1>
                 <p class="text-slate-400 text-xs mt-1">Sua plataforma de alta performance.</p>
             </div>
@@ -259,7 +499,7 @@
                     <button onclick="abrirVisaoGeral('quimica')" class="w-full bg-white p-5 rounded-2xl shadow-sm border border-slate-100 flex items-center justify-between group active:scale-[0.98] transition-all hover:border-brand/50 hover:shadow-md"><div class="flex items-center gap-5"><div class="w-12 h-12 rounded-xl bg-brand-light text-brand-dark flex items-center justify-center text-xl"><i class="fa-solid fa-flask"></i></div><div class="text-left"><h3 class="font-bold text-slate-700 text-lg">Química</h3><p class="text-xs text-slate-400 font-medium">Estequiometria, Orgânica...</p></div></div><i class="fa-solid fa-chevron-right text-slate-300"></i></button>
                     
                     <div class="mt-6 mb-2"><p class="text-xs font-bold text-slate-400 uppercase tracking-widest pl-1">Prática</p></div>
-                    <button onclick="iniciarSimulado()" class="w-full bg-brand p-5 rounded-2xl shadow-md flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-brand-dark relative overflow-hidden"><div class="absolute right-0 top-0 w-24 h-24 bg-white/10 rounded-full -mr-6 -mt-6 blur-xl"></div><div class="flex items-center gap-5 relative z-10"><div class="w-12 h-12 rounded-xl bg-white/20 text-white flex items-center justify-center text-xl border border-white/10"><i class="fa-solid fa-stopwatch"></i></div><div class="text-left"><h3 class="font-bold text-white text-lg">Simulado</h3><p class="text-xs text-white/80 font-medium">Treino Rápido • 20 min</p></div></div><i class="fa-solid fa-chevron-right text-white/70 relative z-10"></i></button>
+                    <button onclick="iniciarSimulado()" class="w-full bg-brand p-5 rounded-2xl shadow-md flex items-center justify-between group active:scale-[0.98] transition-all hover:bg-brand-dark relative overflow-hidden"><div class="absolute right-0 top-0 w-24 h-24 bg-white/10 rounded-full -mr-6 -mt-6 blur-xl"></div><div class="flex items-center gap-5 relative z-10"><div class="w-12 h-12 rounded-xl bg-white/20 text-white flex items-center justify-center text-xl border border-white/10"><i class="fa-solid fa-stopwatch"></i></div><div class="text-left"><h3 class="font-bold text-white text-lg">Simulado</h3><p class="text-xs text-white/80 font-medium">Treino Rápido</p></div></div><i class="fa-solid fa-chevron-right text-white/70 relative z-10"></i></button>
                     
                     <div class="grid grid-cols-2 gap-4 mt-2">
                         <button onclick="abrirFavoritos()" class="w-full py-4 rounded-xl bg-brand text-white font-bold hover:bg-brand-dark transition shadow-lg shadow-brand/30 flex flex-col items-center gap-1 active:scale-[0.98]">
@@ -746,15 +986,17 @@
 
     <!-- TELA SELEÇÃO TÓPICO -->
     <div id="screen-topic-selection" class="hidden min-h-screen flex-col bg-white">
-        <div class="p-8 pb-10 rounded-b-[2.5rem] text-white shadow-xl bg-brand-dark relative z-10">
-            <div class="flex justify-between items-center mb-6">
-                <button onclick="voltarPagina()" class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition backdrop-blur-sm"><i class="fa-solid fa-arrow-left"></i></button>
-                <span id="topic-subtitle" class="text-xs font-bold tracking-widest uppercase opacity-70 border border-white/20 px-3 py-1 rounded-full">Matéria</span>
-            </div>
-            <h1 class="text-3xl font-bold">Qual assunto<br>vamos focar?</h1>
+    <div class="p-8 pb-10 rounded-b-[2.5rem] text-white shadow-xl bg-brand-dark relative z-10">
+        <div class="flex justify-between items-center mb-6">
+            <button id="btn-voltar-topicos" onclick="voltarPagina()" class="bg-white/10 p-2 rounded-full hover:bg-white/20 transition backdrop-blur-sm">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <span id="topic-subtitle" class="text-xs font-bold tracking-widest uppercase opacity-70 border border-white/20 px-3 py-1 rounded-full">Matéria</span>
         </div>
-        <div id="topics-container" class="px-6 -mt-8 relative z-20 space-y-3 pb-32"></div>
+        <h1 class="text-3xl font-bold">Qual assunto<br>vamos focar?</h1>
     </div>
+    <div id="topics-container" class="px-6 -mt-8 relative z-20 space-y-3 pb-32"></div>
+</div>
 
     <!-- TELA SELEÇÃO MÉTODO -->
     <div id="screen-method-selection" class="hidden min-h-screen flex-col bg-white">
@@ -812,26 +1054,54 @@
                     </div>
             </div>
     
-            <div class="p-4 border-t border-slate-100 bg-slate-50 space-y-3">
-    <div class="bg-amber-50 border border-amber-100 rounded-xl p-4 flex items-center justify-between gap-4">
-        <div class="flex-1">
-            <p class="text-[10px] font-bold text-amber-600 uppercase tracking-widest mb-1">Reforço Cirúrgico</p>
-            <p class="text-xs text-amber-900 font-medium">A IA cria 3 cards focados no seu erro atual.</p>
+            <div class="p-5 border-t border-slate-100 bg-slate-50/50 space-y-3">
+    
+    <button id="btn-magic-flashcards" onclick="dispararGeracaoFlashcards()" class="w-full bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4 text-left group transition-all hover:border-indigo-400 hover:shadow-lg hover:shadow-indigo-500/10 active:scale-[0.98]">
+        <div class="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100 text-indigo-500 flex-none flex items-center justify-center text-xl group-hover:scale-110 group-hover:rotate-12 transition-transform duration-300">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
         </div>
-        <button id="btn-magic-flashcards" onclick="dispararGeracaoFlashcards()" class="flex-none bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold px-4 py-3 rounded-xl shadow-lg shadow-amber-500/20 transition active:scale-95 flex items-center gap-2">
-            <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Cards
-        </button>
-    </div>
+        
+        <div class="flex-1">
+            <div class="flex items-center gap-2 mb-0.5">
+                <h4 class="font-extrabold text-slate-700 text-sm group-hover:text-indigo-600 transition-colors uppercase tracking-wide">Reforço Mágico</h4>
+                <span class="bg-indigo-100 text-indigo-700 text-[8px] px-1.5 py-0.5 rounded font-bold border border-indigo-200">IA</span>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium leading-tight group-hover:text-slate-500">
+                Criar 3 flashcards focados no meu erro agora.
+            </p>
+        </div>
 
-    <div class="bg-blue-50 border border-blue-100 rounded-xl p-4 flex items-center justify-between gap-4">
-        <div class="flex-1">
-            <p class="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Tutor Particular</p>
-            <p class="text-xs text-blue-900 font-medium">Não entendeu a explicação? Pergunte ao Tutor.</p>
+        <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white transition-all shadow-sm">
+            <i class="fa-solid fa-bolt text-xs"></i>
         </div>
-        <button onclick="abrirChatIA()" class="flex-none bg-brand hover:bg-brand-dark text-white text-xs font-bold px-4 py-3 rounded-xl shadow-lg shadow-brand/20 transition active:scale-95 flex items-center gap-2">
-            <i class="fa-solid fa-robot"></i> Chat IA
-        </button>
-    </div>
+    </button>
+
+    <button onclick="abrirChatIA()" class="w-full bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex items-center gap-4 text-left group transition-all hover:border-teal-400 hover:shadow-lg hover:shadow-teal-500/10 active:scale-[0.98]">
+        <div class="w-12 h-12 rounded-2xl bg-teal-50 border border-teal-100 text-teal-500 flex-none flex items-center justify-center text-xl group-hover:scale-110 transition-transform duration-300">
+            <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        
+        <div class="flex-1">
+            <div class="flex items-center gap-2 mb-0.5">
+                <h4 class="font-extrabold text-slate-700 text-sm group-hover:text-teal-600 transition-colors uppercase tracking-wide">Tutor Particular</h4>
+            </div>
+            <p class="text-[11px] text-slate-400 font-medium leading-tight group-hover:text-slate-500">
+                Não entendi a resolução. Me explique melhor.
+            </p>
+        </div>
+
+        <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-teal-500 group-hover:text-white transition-all shadow-sm">
+            <i class="fa-solid fa-comment text-xs"></i>
+        </div>
+    </button>
+
+</div>
+
+        <div class="w-8 h-8 rounded-full bg-slate-50 text-slate-300 flex items-center justify-center group-hover:bg-brand group-hover:text-white transition-all shadow-sm">
+            <i class="fa-solid fa-comment-dots text-xs"></i>
+        </div>
+    </button>
+
 </div>
     
         </div>
@@ -1205,6 +1475,44 @@
     </nav>
 
     <script>
+// --- VARIÁVEIS GLOBAIS DE CONTROLE ---
+let contadorQuestoesSemDicaExtra = 3; // Começa cheio para dar um gosto inicial (opcional)
+
+const PROMPT_HINT_SOCRATIC = `
+VOCÊ É O "MENTOR INVISÍVEL" DO EXATIZ.
+O aluno está travado. Sua missão NÃO é guiar para a resposta, mas sim corrigir a VISÃO dele.
+
+### DADOS DO CASO:
+- Questão: "{enunciado}"
+- Alternativas Disponíveis:
+{alternativas}
+- O Aluno falhou no pilar: {pilarFraco} ({descricaoPilar}).
+- Nível da Intervenção: DICA {hintIndex} (de 2 possíveis).
+
+### REGRAS DE BLOQUEIO (CRITÉRIO DE ELIMINAÇÃO):
+1. **PROIBIDO:** Usar as palavras "relação", "fórmula", "depende", "lembre-se".
+2. **PROIBIDO:** Repetir o enunciado.
+3. **PROIBIDO:** Citar explicitamente a letra ou o valor da alternativa correta. Use as alternativas apenas para identificar distrações.
+
+---
+
+### SEU OBJETIVO (Siga estritamente o Nível {hintIndex}):
+
+**SE FOR DICA 1 (O VISUALIZADOR - Foco: Geometria e Definição):**
+O aluno não está "vendo" o problema. Faça ele desenhar mentalmente.
+- *Cenário da Gravidade:* "Ao subir a montanha, a distância até o CENTRO da Terra aumentou ou diminuiu?"
+- *Cenário de Conversão:* "O texto fala em minutos, mas veja as opções. Em que unidade elas estão?"
+- *Objetivo:* Fazer o aluno entender o CENÁRIO FÍSICO ou o PADRÃO DAS OPÇÕES.
+
+**SE FOR DICA 2 (O MATEMÁTICO - Foco: Mecânica da Grandeza):**
+O aluno viu o cenário, mas não sabe como a matemática se comporta.
+- *Cenário da Gravidade:* "A gravidade funciona pelo inverso do quadrado da distância. Se o denominador cresce, o que acontece com a força?"
+- *Objetivo:* Fazer o aluno entender a TENDÊNCIA MATEMÁTICA.
+
+---
+
+### RESPOSTA FINAL:
+Gere APENAS a frase da dica. Curta, seca e cirúrgica.`;
         // --- CONFIGURAÇÃO DO SUPABASE ---
         const SUPABASE_URL = "https://qztqzxdvuwcrbipkjjrp.supabase.co"; // COLE SUA URL AQUI
         const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF6dHF6eGR2dXdjcmJpcGtqanJwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njc3Njc0MDQsImV4cCI6MjA4MzM0MzQwNH0.q934e0EluSxCz29MQHiwq0bP391qZtS62BTQHCV_oZ4"; // COLE SUA ANON KEY AQUI
@@ -1220,6 +1528,14 @@
             }
         }
         
+        // --- VARIÁVEIS DO MOTOR DE FLASHCARDS (SESSÃO 1) ---
+let POOL_RESERVA = {
+    facil: [],
+    medio: [],
+    dificil: []
+};
+let STREAK_DIFICULDADE = 0; // Contador específico para o salto de nível
+let STREAK_ERRO = 0; // Adicione esta linha abaixo de let STREAK_DIFICULDADE = 0;
         let CACHE_BENCHMARKS = {};
         let ESTADO = {
             usuario: { xp: 0, nivel: 1, sequencia: 0, questoesRespondidas: 0, isPro: true },
@@ -1261,6 +1577,200 @@ let CACHE_GROUP_THRESHOLDS = [];
 let CACHE_VILLAIN_NAMES = [];
 let CACHE_VILLAIN_SURNAMES = [];
 
+// --- CACHE DINÂMICO (VEM DO SUPABASE) ---
+let CACHE_PESOS_TOPICOS = {}; // Vai guardar: {'funcoes': 9, 'dinamica': 10...}
+let CACHE_NIVEIS_VILAO = [];  // Vai guardar as faixas: Sutil, Alerta, Crítico
+// Variável de controle de sessão (Adicione ao seu objeto ESTADO ou escopo global)
+let contadorDicasCombo = 0; // Conta quantas questões passaram para liberar a dica extra
+
+/**
+ * Calcula quantas dicas o aluno pode usar na questão atual.
+ * @param {string} topico - O tópico da questão atual.
+ * @param {number} nErros - Número total de erros registrados nesse tópico (para saber se é DNA Mapeado).
+ * @returns {object} { qtd: number, motivo: string }
+ */
+/**
+ * Define quantas dicas estão disponíveis para ESTA questão específica.
+ */
+// Variável Global (certifique-se que está no topo do script) 
+// No topo do código
+
+function atualizarBadgesGlobalmente() {
+    // Varre todas as questões atualmente carregadas na memória
+    questoesTreinoAtuais.forEach((q, index) => {
+        const card = document.getElementById(`q-card-${index}`);
+        if (card) {
+            const badge = card.querySelector('.hint-badge');
+            const btn = card.querySelector('.btn-hint');
+            
+            if (badge && btn) {
+                // Recalcula o saldo para ESTA questão com o novo estado do contador
+                const s = ESTADO.statsPorAssunto[q.topico];
+                const nErros = s ? (s.total - s.acertos) : 0;
+                const limite = calcularSaldoDicas(q.topico, nErros);
+                
+                // Quantas sobraram? (Total permitido - O que já usei nesta questão)
+                const usadasNestaQuestao = q.dicasUsadas || 0;
+                const restante = Math.max(0, limite.qtd - usadasNestaQuestao);
+                
+                // Atualiza visualmente
+                badge.innerText = restante;
+                
+                // Se zerou ou ficou negativo, desabilita
+                if (restante <= 0) {
+                    badge.remove();
+                    btn.disabled = true;
+                    btn.style.opacity = '0.4';
+                } else {
+                    // Garante que o botão esteja ativo se ainda tem saldo
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                }
+            }
+        }
+    });
+}
+
+function calcularSaldoDicas(topico, nErros) {
+    // 1. Em vez de olhar o 'tipo de erro', olhamos a 'Ameaça Global' (baseada no K do Supabase)
+    const stats = ESTADO.statsPorAssunto[topico] || { acertos: 0, total: 0 };
+    const ameaca = analisarAmeacaVilao(topico, stats.acertos, stats.total); 
+    
+    // DEBUG para você validar no console
+    console.log(`--- [LOGICA HINT] Tópico: ${topico} ---`);
+    console.log(`> Status no Banco: ${ameaca.nivel}`); 
+    console.log(`> Erros Históricos: ${nErros}`);
+
+    // REGRA 1: VERMELHO REAL (Intensidade Crítica tabelada no Banco)
+    if (ameaca.nivel === 'Crítico') {
+        return { qtd: 2, motivo: 'intenso' };
+    }
+
+    // REGRA 2: DNA MAPEADO (Bônus de veterano: 20 erros na história)
+    if (nErros >= 20) {
+        if (contadorQuestoesSemDicaExtra >= 3) {
+            return { qtd: 2, motivo: 'dna_bonus' }; 
+        }
+        return { qtd: 1, motivo: 'dna_recarga' };
+    }
+
+    // REGRA 3: PADRÃO (Amarelo ou Verde sem DNA)
+    return { qtd: 1, motivo: 'padrao' };
+}
+
+// Função que calcula o K usando dados do SUPABASE
+function analisarAmeacaVilao(topico, acertos, total) {
+    // 1. Busca a Importância no Cache do Banco
+    const chaveTopico = normalizarTexto(topico);
+    
+    // Tenta achar exato. Se não achar, procura parcial. Se falhar, assume peso médio (5).
+    let importancia = CACHE_PESOS_TOPICOS[chaveTopico];
+    
+    if (!importancia) {
+        // Tenta busca parcial (ex: "funções" achando "funções do 1 grau")
+        const chaveParcial = Object.keys(CACHE_PESOS_TOPICOS).find(k => chaveTopico.includes(k) || k.includes(chaveTopico));
+        importancia = chaveParcial ? CACHE_PESOS_TOPICOS[chaveParcial] : 5;
+    }
+
+    // 2. O Cálculo Matemático
+    const desempenho = total > 0 ? (acertos / total) : 0; // 0.0 a 1.0
+    const k = importancia * (1 - desempenho);
+
+    // 3. Classificação Dinâmica (Baseada na tabela villain_strengths)
+    // Encontra em qual faixa o 'k' se encaixa
+    const nivelEncontrado = CACHE_NIVEIS_VILAO.find(n => k >= n.min_k && k <= n.max_k);
+
+    // Configuração Padrão (Caso o banco falhe ou k seja maior que o máximo previsto)
+    let configFinal = {
+        nivel: 'Desconhecido',
+        k: k.toFixed(1),
+        cor: 'slate',
+        icone: 'fa-question',
+        titulo: 'Analisando...',
+        msg: 'Continue praticando.',
+        bgGradient: 'from-slate-50 to-white',
+        border: 'border-slate-200'
+    };
+
+    if (nivelEncontrado) {
+        // Se a coluna style_settings for JSON no banco, o Supabase já traz como objeto JS.
+        // Se você salvou como texto, precisaria de JSON.parse, mas o tipo JSONB é automático.
+        const estilo = nivelEncontrado.style_settings || {};
+        
+        // Mapeia o JSON do banco para as classes do Tailwind que usamos no front
+        // (Assumindo que seu JSON no banco tem campos como 'color', 'icon')
+        // Exemplo de mapeamento rápido:
+        let corTailwind = 'slate';
+        let gradiente = 'from-slate-50 to-white';
+        let borda = 'border-slate-200';
+
+        // Lógica de tradução de estilos (Hex do banco -> Tailwind do App)
+        // Se no banco o nível for 'Crítico', usamos vermelho.
+        if (nivelEncontrado.level_name === 'Crítico') {
+            corTailwind = 'red';
+            gradiente = 'from-red-50 to-white';
+            borda = 'border-red-500 border-l-4';
+        } else if (nivelEncontrado.level_name === 'Alerta') {
+            corTailwind = 'amber';
+            gradiente = 'from-amber-50 to-white';
+            borda = 'border-amber-200';
+        } else {
+            corTailwind = 'slate'; // Sutil
+            gradiente = 'from-slate-50 to-white';
+            borda = 'border-slate-200';
+        }
+
+        configFinal = {
+            nivel: nivelEncontrado.level_name,
+            k: k.toFixed(1),
+            cor: corTailwind,
+            // Pega o ícone do banco ou usa um padrão
+            icone: estilo.icon || 'fa-circle-info', 
+            titulo: nivelEncontrado.level_name === 'Crítico' ? 'Risco de Reprovação' : (nivelEncontrado.level_name === 'Alerta' ? 'Ponto de Atenção' : 'Ajuste Fino'),
+            msg: nivelEncontrado.description_template || "Descrição não carregada.",
+            bgGradient: gradiente,
+            border: borda
+        };
+    }
+
+    return configFinal;
+}
+
+async function carregarRegrasDeVilao() {
+    if (!supabaseClient) return;
+    console.log("📥 Baixando regras do Jogo (Pesos e Vilões)...");
+
+    try {
+        // 1. Baixa os Pesos dos Tópicos
+        const { data: pesos, error: err1 } = await supabaseClient.from('topic_weights').select('*');
+        if (pesos) {
+            // Transforma em um Dicionário para acesso rápido
+            pesos.forEach(p => {
+                // Normaliza a chave para evitar erro de acento/maiúscula
+                const chave = normalizarTexto(p.topic_name); 
+                CACHE_PESOS_TOPICOS[chave] = p.importance;
+            });
+        }
+
+        // 2. Baixa as Faixas de Intensidade (Sutil/Alerta/Crítico)
+        const { data: niveis, error: err2 } = await supabaseClient
+            .from('villain_strengths')
+            .select('*')
+            .order('min_k', { ascending: true });
+            
+        if (niveis) {
+            CACHE_NIVEIS_VILAO = niveis;
+        }
+
+        console.log(`✅ Regras carregadas: ${Object.keys(CACHE_PESOS_TOPICOS).length} tópicos, ${CACHE_NIVEIS_VILAO.length} níveis.`);
+
+    } catch (e) {
+        console.error("Erro ao baixar regras:", e);
+        // Fallback mínimo de segurança se o banco falhar
+        CACHE_PESOS_TOPICOS = { 'default': 5 };
+    }
+}
+
 // Função para carregar o "Cérebro" do banco ao iniciar o app
 async function carregarInteligenciaArtificial() {
     if (!supabaseClient) return;
@@ -1271,7 +1781,7 @@ async function carregarInteligenciaArtificial() {
         const { data: rules } = await supabaseClient.from('judgment_rules').select('*');
         if (rules) CACHE_JUDGEMENT_RULES = rules;
 
-        // 2. Baixa Régua de Classificação (Os Grupos)
+        // 2. Baixa Régua de Classificação (Os Grupos Balizados por Pillar_Code)
         const { data: groups } = await supabaseClient.from('group_classification').select('*');
         if (groups) CACHE_GROUP_THRESHOLDS = groups;
 
@@ -1662,12 +2172,12 @@ if (check(r.trigger_natureza, tag)) {
 }
 
 function identificarVilao_Real(grupos) {
-    const nomeObj = CACHE_VILLAIN_NAMES.find(n => n.level_a === grupos.grupoA && n.level_c === grupos.grupoC);
-    const sobreObj = CACHE_VILLAIN_SURNAMES.find(s => s.level_i === grupos.grupoI && s.level_t === grupos.grupoT);
+    const n = CACHE_VILLAIN_NAMES.find(n => n.level_a === grupos.grupoA && n.level_c === grupos.grupoC);
+    const s = CACHE_VILLAIN_SURNAMES.find(s => s.level_i === grupos.grupoI && s.level_t === grupos.grupoT);
 
     return {
-        nomeCompleto: `${nomeObj ? nomeObj.name_text : "O Desconhecido"} ${sobreObj ? sobreObj.surname_text : "sem Face"}`,
-        descricao: `${nomeObj ? nomeObj.description : ""} ${sobreObj ? sobreObj.description : ""}`
+        nomeCompleto: `${n?.name_text || "O Desconhecido"} ${s?.surname_text || "sem Face"}`,
+        descricao: `${n?.description || ""} ${s?.description || ""}`.trim() || "Perfil em análise de combate."
     };
 }
 
@@ -1814,9 +2324,124 @@ async function carregarDadosDoTopico(topico) {
     navTo('screen-flashcards');
 }
 
-        function iniciarFlashcardsContexto() {
-            iniciarSessaoFlashcardsRapida(topicoSelecionado, 999, 'dashboard');
+        async function iniciarFlashcardsContexto() {
+    // 1. Setup Visual
+    document.getElementById('fc-title').innerText = topicoSelecionado.toUpperCase();
+    modoPersonalizado = false;
+    modoRevisao = false;
+    
+    mostrarToast(`<i class="fa-solid fa-brain animate-pulse"></i> A IA está montando sua sessão de ${topicoSelecionado}...`);
+
+    if (!supabaseClient) { alert("Erro: Supabase offline."); return; }
+
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if(!user) return;
+
+        // 2. Busca Cards + Progresso (Igual anterior, para garantir dados)
+        const { data: cardsOficiais, error: errCards } = await supabaseClient
+            .from('flashcards')
+            .select('*')
+            .ilike('topico', `%${topicoSelecionado}%`);
+
+        if (errCards) throw errCards;
+        if (!cardsOficiais || cardsOficiais.length === 0) {
+            alert("Sem cards oficiais neste tópico.");
+            return;
         }
+
+        const idsCards = cardsOficiais.map(c => c.id);
+        const { data: progresso } = await supabaseClient
+            .from('user_flashcard_progress')
+            .select('flashcard_id, mastery_level')
+            .eq('user_id', user.id)
+            .in('flashcard_id', idsCards);
+
+        // 3. Processamento e Merge
+        let todosOsCards = cardsOficiais.map(card => {
+            const p = progresso ? progresso.find(x => x.flashcard_id === card.id) : null;
+            return {
+                ...card,
+                p: card.pergunta, 
+                r: card.resposta,
+                mastery_level: p ? p.mastery_level : 0, // 0 = Novo
+                nivel: card.nivel || 1, // 1=Fácil, 2=Médio, 3=Difícil
+                isOfficial: true
+            };
+        });
+
+        // 4. Filtro de Maestria (Remove Nível 3 - Masterizados)
+        // Se o card já foi zerado, ele nem entra no sorteio.
+        todosOsCards = todosOsCards.filter(c => c.mastery_level < 3);
+
+        if (todosOsCards.length === 0) {
+            alert("Você já dominou tudo aqui! Reinicie o tópico se quiser revisar.");
+            return;
+        }
+
+        // 5. ENCHENDO OS BALDES (A Lógica da Reserva)
+        // Separamos tudo o que existe por dificuldade
+        const bucketFacil = todosOsCards.filter(c => c.nivel === 1);
+        const bucketMedio = todosOsCards.filter(c => c.nivel === 2);
+        const bucketDificil = todosOsCards.filter(c => c.nivel === 3);
+
+        // Função auxiliar para embaralhar e sacar
+        const sacar = (array, qtd) => {
+            const embaralhado = array.sort(() => Math.random() - 0.5);
+            const saque = embaralhado.slice(0, qtd);
+            const resto = embaralhado.slice(qtd);
+            return { saque, resto };
+        };
+
+        // 6. MONTANDO A MÃO INICIAL (Mix Equilibrado - 12 Cards)
+        // Proporção Alvo: 6 Fáceis | 4 Médios | 2 Difíceis
+        const selFacil = sacar(bucketFacil, 6);
+        const selMedio = sacar(bucketMedio, 4);
+        const selDificil = sacar(bucketDificil, 2);
+
+        // Compõe a sessão inicial
+        let sessaoInicial = [
+            ...selFacil.saque,
+            ...selMedio.saque,
+            ...selDificil.saque
+        ];
+
+        // Se faltou card (ex: não tinha 6 fáceis), completa com o que tiver sobrado nos outros baldes
+        // (Lógica de preenchimento simples para garantir que tenha cards)
+        if (sessaoInicial.length < 5) {
+            // Caso extremo: pega tudo o que tem se for muito pouco
+            sessaoInicial = todosOsCards.slice(0, 20); 
+        }
+
+        // Embaralha a mão inicial para não vir agrupado
+        cardsAtuais = sessaoInicial.sort(() => Math.random() - 0.5);
+
+        // 7. SALVANDO A RESERVA (Para a Parte 2 - O Motor Dinâmico)
+        // Aqui guardamos os cards que NÃO entraram agora, mas podem entrar se o aluno for bem/mal.
+        POOL_RESERVA = {
+            facil: selFacil.resto,
+            medio: selMedio.resto,
+            dificil: selDificil.resto
+        };
+
+        // Reset de Variáveis de Controle
+        cardIndex = 0; 
+        acertosSessao = 0; 
+        xpSessao = 0; 
+        streakAtual = 0;
+        STREAK_DIFICULDADE = 0; // Novo contador para o "Combo"
+        
+        console.log(`🏁 Sessão Montada: ${cardsAtuais.length} cards.`);
+        console.log(`📦 Estoque Reserva: F(${POOL_RESERVA.facil.length}) M(${POOL_RESERVA.medio.length}) D(${POOL_RESERVA.dificil.length})`);
+        
+        renderCard();
+        navTo('screen-flashcards');
+
+    } catch (e) {
+        console.error(e);
+        alert("Erro ao iniciar sessão: " + e.message);
+    }
+}
 
         // --- FIM DO BLOCO CRÍTICO ---
 
@@ -3256,89 +3881,201 @@ function renderRoadmapSmart() {
 }
         // --- OUTRAS FUNÇÕES DE NAVEGAÇÃO E ABERTURA ---
         function abrirVisaoGeral(materia) {
-            materiaSelecionada = materia;
-            const matKey = getMateriaKey(materia);
-            
-            // --- CORREÇÃO DE FLUXO (ELO 1) ---
-            // Localiza o botão de voltar desta tela e força ele a ir para o Dashboard
-            const btnVoltar = document.querySelector('#screen-visao-geral button');
-            if (btnVoltar) {
-                btnVoltar.onclick = function() { navTo('screen-dashboard'); };
+    materiaSelecionada = materia;
+    const matKey = getMateriaKey(materia);
+    
+    // Configura botão de voltar para o Dashboard
+    const btnVoltar = document.querySelector('#screen-visao-geral button');
+    if (btnVoltar) {
+        btnVoltar.onclick = function() { navTo('screen-dashboard'); };
+    }
+
+    const titles = { 'matematica': 'Matemática', 'fisica': 'Física', 'quimica': 'Química' };
+    document.getElementById('vg-title').innerText = titles[matKey] || materia;
+    
+    // Stats Básicos
+    const statsMat = ESTADO.statsPorMateria[matKey] || { questoesFeitas: 0 };
+    const statsGlobal = ESTADO.stats[matKey] || { acertos: 0, total: 0 };
+    const accMat = statsGlobal.total > 0 ? Math.round((statsGlobal.acertos / statsGlobal.total) * 100) : 0;
+    
+    document.getElementById('vg-stat-questions').innerText = statsMat.questoesFeitas;
+    document.getElementById('vg-stat-acc').innerText = `${accMat}%`;
+
+    // --- CÁLCULO DO VILÃO ---
+    let maiorK = -1;
+    let topicoVilao = null;
+    let dadosVilao = null;
+
+    const topicosDaMateria = listaTopicos[matKey] || [];
+    
+    topicosDaMateria.forEach(topico => {
+        const s = ESTADO.statsPorAssunto[topico];
+        if (s && s.total >= 3) {
+            const analise = analisarAmeacaVilao(topico, s.acertos, s.total);
+            const kVal = parseFloat(analise.k);
+            if (kVal > maiorK) {
+                maiorK = kVal;
+                topicoVilao = topico;
+                dadosVilao = analise;
             }
-            // ---------------------------------
+        }
+    });
 
-            const titles = { 'matematica': 'Matemática', 'fisica': 'Física', 'quimica': 'Química' };
-            document.getElementById('vg-title').innerText = titles[matKey];
+    // --- RENDERIZAÇÃO DO CARD DO VILÃO ---
+    let elVillainText = document.getElementById('vg-villain');
+    if (!elVillainText) {
+        const container = document.querySelector('#screen-visao-geral .px-6');
+        if (container && container.children.length >= 2) {
+             const cardCandidate = container.children[1]; 
+             if (cardCandidate.classList.contains('group')) {
+                 elVillainText = { closest: () => cardCandidate }; 
+             }
+        }
+    }
+
+    if (elVillainText) {
+        const elVillainCard = elVillainText.closest('.group');
+        
+        if (topicoVilao && dadosVilao && elVillainCard) {
+            // VILÃO ENCONTRADO (BOTÃO ATIVO)
+            elVillainCard.onclick = function() {
+                if(navigator.vibrate) navigator.vibrate(50);
+                gerarListaCombateVilao(topicoVilao);
+            };
             
-            // Stats Básicos (Instantâneo)
-            const statsMat = ESTADO.statsPorMateria[matKey] || { questoesFeitas: 0 };
-            const statsGlobal = ESTADO.stats[matKey] || { acertos: 0, total: 0 };
-            const accMat = statsGlobal.total > 0 ? Math.round((statsGlobal.acertos / statsGlobal.total) * 100) : 0;
+            const classeExtra = dadosVilao.nivel === 'Crítico' ? 'villain-critical-pulse' : '';
+
+            elVillainCard.className = `bg-gradient-to-r ${dadosVilao.bgGradient} p-5 rounded-3xl ${dadosVilao.border} shadow-md flex items-center gap-5 relative overflow-hidden group transition-all cursor-pointer active:scale-95 ${classeExtra}`;
             
-            document.getElementById('vg-stat-questions').innerText = statsMat.questoesFeitas;
-            document.getElementById('vg-stat-acc').innerText = `${accMat}%`;
-
-            // Identificação do Vilão (OFFLINE)
-            const elVillain = document.getElementById('vg-villain');
-            const logsDaMateria = (ESTADO.todosOsLogs || []).filter(l => {
-                const mLog = getMateriaDoTopico(l.topico);
-                return normalizarTexto(mLog) === normalizarTexto(matKey);
-            });
-
-            const errosDaMateria = logsDaMateria.filter(l => String(l.acertou) === 'false' && (l.impact_atencao > 0 || l.impact_conhecimento > 0));
-
-            if (errosDaMateria.length < 3) {
-                elVillain.innerText = "Dados insuficientes";
-            } else {
-                let soma = { A: 0, C: 0, I: 0, T: 0 };
-                errosDaMateria.forEach(e => {
-                    soma.A += Number(e.impact_atencao || 0);
-                    soma.C += Number(e.impact_conhecimento || 0);
-                    soma.I += Number(e.impact_interpretacao || 0);
-                    soma.T += Number(e.impact_traducao || 0);
-                });
-                const n = errosDaMateria.length;
-                const fator = Math.max(0.1, 1.5 - (accMat / 100));
-                const media = { A: (soma.A/n)*fator, C: (soma.C/n)*fator, I: (soma.I/n)*fator, T: (soma.T/n)*fator };
-                const grupos = classificarGrupos_Real(media);
-                const vilao = identificarVilao_Real(grupos);
-                elVillain.innerText = vilao.nomeCompleto;
-            }
-
-            // HTML dos Gráficos
-            const containerCharts = document.getElementById('vg-charts-area');
-            if (containerCharts) containerCharts.remove();
-
-            const chartsHTML = `
-                <div id="vg-charts-area" class="mt-4 animate-fade-in">
-                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-2">Desempenho & Perfil</h3>
-                    <div class="flex gap-2 h-40">
-                        <div class="w-[30%] bg-white p-1 rounded-2xl border border-slate-100 shadow-sm flex items-center justify-center overflow-hidden">
-                            <div style="width: 120px; height: 120px; position: relative;">
-                                <canvas id="radarACIT"></canvas>
-                            </div>
-                        </div>
-                        <div class="w-[70%] bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col overflow-hidden">
-                            <div class="flex justify-between items-center mb-2">
-                                <h4 class="text-[9px] font-bold text-slate-500 uppercase">Consistência</h4>
-                                <span class="text-[8px] text-brand bg-brand-light px-1.5 rounded font-bold">20 Questões</span>
-                            </div>
-                            <div class="flex-1 relative w-full min-h-0"><canvas id="vg-chart-line"></canvas></div>
-                        </div>
+            elVillainCard.innerHTML = `
+                <div class="w-14 h-14 rounded-2xl bg-white/60 backdrop-blur-sm text-${dadosVilao.cor}-500 flex flex-none items-center justify-center text-2xl shadow-sm border border-white group-hover:scale-110 transition-transform duration-300 z-10">
+                    <i class="fa-solid ${dadosVilao.icone}"></i>
+                </div>
+                
+                <div class="relative z-10 flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                        <span class="text-[9px] font-black text-${dadosVilao.cor}-600 uppercase tracking-widest bg-white/50 px-2 py-0.5 rounded border border-${dadosVilao.cor}-100">
+                            ${dadosVilao.titulo}
+                        </span>
+                        <i class="fa-solid fa-play text-${dadosVilao.cor}-400 text-xs animate-pulse"></i>
                     </div>
+                    <div id="vg-villain" class="text-lg font-black text-slate-800 leading-tight mb-1 truncate drop-shadow-sm">
+                        ${topicoVilao}
+                    </div>
+                    <p class="text-[10px] text-slate-600 font-medium leading-tight opacity-90">
+                        ${dadosVilao.msg}
+                    </p>
+                </div>
+                
+                <div class="absolute -right-6 -bottom-6 text-9xl opacity-5 rotate-12 pointer-events-none text-${dadosVilao.cor}-900">
+                    <i class="fa-solid ${dadosVilao.icone}"></i>
                 </div>
             `;
-            document.getElementById('btn-ver-topicos').insertAdjacentHTML('beforebegin', chartsHTML);
-
-            // Renderização
-            setTimeout(() => {
-                renderizarRadarACIT_OFFLINE(logsDaMateria);
-                renderizarGraficosGeraisDaMateria_OFFLINE(logsDaMateria);
-            }, 50);
+        } else if (elVillainCard) {
+            // NENHUM VILÃO
+            elVillainCard.onclick = null;
+            elVillainCard.className = "bg-white p-5 rounded-3xl border border-slate-100 shadow-sm flex items-center gap-5 relative overflow-hidden group";
             
-            document.getElementById('btn-ver-topicos').onclick = () => abrirSelecaoTopico(materia);
-            navTo('screen-visao-geral');
+            elVillainCard.innerHTML = `
+                <div class="w-14 h-14 rounded-2xl bg-slate-50 text-slate-400 flex flex-none items-center justify-center text-2xl shadow-sm">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div class="relative z-10 flex-1">
+                    <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Status</h3>
+                    <div id="vg-villain" class="text-lg font-bold text-slate-700 leading-tight mb-1">Área Segura</div>
+                    <p class="text-[10px] text-slate-400 font-medium">Faça mais questões para calibrar o radar.</p>
+                </div>
+            `;
         }
+    }
+
+    // --- GRÁFICOS (RESTAURADOS TAMANHOS ORIGINAIS) ---
+    const containerCharts = document.getElementById('vg-charts-area');
+    if (containerCharts) containerCharts.remove();
+
+    const chartsHTML = `
+        <div id="vg-charts-area" class="mt-4 animate-fade-in">
+            <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-widest pl-1 mb-2">Desempenho & Perfil</h3>
+            
+            <div class="flex gap-2 h-40">
+                <div class="w-[30%] bg-white p-1 rounded-2xl border border-slate-100 shadow-sm flex flex-col items-center justify-center overflow-hidden relative">
+                    
+                    <div style="width: 120px; height: 120px; position: relative; display: flex; justify-content: center;">
+                        <canvas id="radarACIT"></canvas>
+                    </div>
+
+                    <div class="w-full grid grid-cols-2 gap-x-0.5 text-[6px] text-slate-300 font-bold uppercase tracking-wider text-center leading-tight -mt-2 z-10">
+                        <span>A: Atenção</span>
+                        <span>C: Conhec.</span>
+                        <span>I: Interp.</span>
+                        <span>T: Trad.</span>
+                    </div>
+
+                </div>
+                
+                <div class="w-[70%] bg-white p-3 rounded-2xl border border-slate-100 shadow-sm flex flex-col overflow-hidden">
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-[9px] font-bold text-slate-500 uppercase">Consistência</h4>
+                        <span class="text-[8px] text-brand bg-brand-light px-1.5 rounded font-bold">Histórico</span>
+                    </div>
+                    <div class="flex-1 relative w-full min-h-0"><canvas id="vg-chart-line"></canvas></div>
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const btnVerTopicos = document.getElementById('btn-ver-topicos');
+    if(btnVerTopicos) {
+        btnVerTopicos.insertAdjacentHTML('beforebegin', chartsHTML);
+        btnVerTopicos.onclick = () => abrirSelecaoTopico(materia);
+    }
+
+    const logsDaMateria = (ESTADO.todosOsLogs || []).filter(l => {
+        const mLog = getMateriaDoTopico(l.topico);
+        return normalizarTexto(mLog) === normalizarTexto(matKey);
+    });
+
+    setTimeout(() => {
+        renderizarRadarACIT_OFFLINE(logsDaMateria);
+        renderizarGraficosGeraisDaMateria_OFFLINE(logsDaMateria);
+    }, 50);
+    
+    navTo('screen-visao-geral');
+}
+
+function obterPilarFracoParaHint(materia, topico) {
+    const matKey = getMateriaKey(materia);
+    
+    // Tenta pegar os erros reais registrados nesse tópico
+    let perfil = {};
+    try {
+        perfil = ESTADO.perfilDeErros[matKey]?.topicos[topico] || {};
+    } catch(e) { perfil = {}; }
+
+    // Conta qual erro é mais frequente
+    let maiorErro = 'nenhum';
+    let max = -1;
+
+    // Mapeamento interno -> Prompt Socrático
+    const mapa = {
+        'conceito': { nome: 'CONHECIMENTO (C)', desc: 'Dificuldade em lembrar relações e definições.' },
+        'formula': { nome: 'CONHECIMENTO (C)', desc: 'Esquecimento de ferramentas básicas.' },
+        'interpretacao': { nome: 'INTERPRETAÇÃO (I)', desc: 'Dificuldade em entender o comando.' },
+        'conta': { nome: 'TRADUÇÃO (T)', desc: 'Erro na modelagem ou execução matemática.' },
+        'pegadinha': { nome: 'ATENÇÃO (A)', desc: 'Caiu em distratores ou ignorou unidades.' }
+    };
+
+    for (const [tipo, qtd] of Object.entries(perfil)) {
+        if (qtd > max) { max = qtd; maiorErro = tipo; }
+    }
+
+    // Se não tiver dados (max <= 0), retorna um padrão ou sorteia para variar
+    if (max <= 0 || !mapa[maiorErro]) {
+        return { nome: 'INTERPRETAÇÃO (I)', desc: 'Foco na análise do enunciado.' }; // Default seguro
+    }
+
+    return mapa[maiorErro];
+}
 
         function reciclarTopico(materia, topico, event) {
     if (event) event.stopPropagation(); 
@@ -3503,64 +4240,105 @@ function iniciarReforcoInteligente(materia, topicoRecebido) {
 }
 
     function abrirSelecaoTopico(materia) {
+    console.log("--- DEBUG: Abrindo Seleção de Tópicos ---");
     contextoNavegacao = 'dashboard';
-    materiaSelecionada = materia;
+    const matAlvo = materia || materiaSelecionada;
+    materiaSelecionada = matAlvo; 
 
-    const btnVoltar = document.querySelector('#screen-topic-selection button');
+    const btnVoltar = document.getElementById('btn-voltar-topicos');
     if (btnVoltar) {
-        btnVoltar.onclick = function() { abrirVisaoGeral(materia); };
+        btnVoltar.onclick = function(e) {
+            e.preventDefault(); 
+            abrirVisaoGeral(matAlvo); 
+        };
     }
 
-    document.getElementById('topic-subtitle').innerText = materia.toUpperCase();
-    
+    document.getElementById('topic-subtitle').innerText = matAlvo.toUpperCase();
     const container = document.getElementById('topics-container');
     container.innerHTML = '';
     
-    if(listaTopicos[materia]) {
+    if(listaTopicos[matAlvo]) {
+        // --- NOVO: LÓGICA DE ORDENAÇÃO POR PRIORIDADE ---
+        const listaOrdenada = listaTopicos[matAlvo].map(topico => {
+            const stats = ESTADO.statsPorAssunto[topico] || { total: 0, acertos: 0 };
+            let peso = 0; // 0: Neutro, 1: Alerta (Amarelo), 2: Crítico (Vermelho)
+            
+            if (stats.total >= 7) {
+                const analise = analisarAmeacaVilao(topico, stats.acertos, stats.total);
+                if (analise.nivel === 'Crítico') peso = 2;
+                else if (analise.nivel === 'Alerta') peso = 1;
+            }
+            return { nome: topico, prioridade: peso };
+        }).sort((a, b) => b.prioridade - a.prioridade); // Coloca peso 2 no topo, depois 1, depois 0
+
         const fragment = document.createDocumentFragment();
 
-        listaTopicos[materia].forEach((topico, index) => {
+        // Agora iteramos sobre a listaOrdenada
+        listaOrdenada.forEach((item, index) => {
+            const topico = item.nome;
+            const statsTopic = ESTADO.statsPorAssunto[topico] || { total: 0, acertos: 0 };
             const acc = calcularDesempenhoPonderado(topico);
             const status = calcularStatusAcesso(topico); 
-            const statsTopic = ESTADO.statsPorAssunto[topico] || { total: 0 };
             const logsDesteTopico = ESTADO.cacheLogsPorTopico ? ESTADO.cacheLogsPorTopico[normalizarTexto(topico)] : [];
+            const topicoSeguro = topico.replace(/'/g, "\\'");
+            
+            let visual = {
+                borderClass: 'border-slate-100',
+                bgClass: 'bg-white',
+                iconHtml: '', 
+                barColor: 'bg-brand', 
+                textColor: 'text-slate-700'
+            };
+
+            if (statsTopic.total >= 7) {
+                const analise = analisarAmeacaVilao(topico, statsTopic.acertos, statsTopic.total);
+                if (analise.nivel === 'Crítico') {
+                    visual.borderClass = 'border-red-200 border-l-4 border-l-red-500 shadow-red-100';
+                    visual.bgClass = 'bg-red-50';
+                    visual.iconHtml = `<i class="fa-solid fa-skull-crossbones text-red-500 text-xs animate-pulse" title="Risco Crítico"></i>`;
+                    visual.barColor = 'bg-red-500';
+                    visual.textColor = 'text-red-900';
+                } else if (analise.nivel === 'Alerta') {
+                    visual.borderClass = 'border-amber-200 border-l-4 border-l-amber-400';
+                    visual.bgClass = 'bg-amber-50';
+                    visual.iconHtml = `<i class="fa-solid fa-triangle-exclamation text-amber-500 text-xs" title="Atenção"></i>`;
+                    visual.barColor = 'bg-amber-400';
+                    visual.textColor = 'text-amber-800';
+                }
+            }
 
             const cardId = `topic-card-${index}`;
             const chevronId = `chevron-${index}`;
-            
             const div = document.createElement('div');
-            div.className = `bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden mb-3 transition-all`;
-            
-            // Tratamento de aspas no nome do tópico
-            const topicoSeguro = topico.replace(/'/g, "\\'");
+            div.className = `${visual.bgClass} rounded-2xl shadow-sm border ${visual.borderClass} overflow-hidden mb-3 transition-all`;
 
             div.innerHTML = `
                 <div onclick="toggleAccordion('${cardId}', '${chevronId}')" class="p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition select-none">
                     <div class="flex-1">
                         <div class="flex items-center gap-2 mb-1.5">
-                            <h3 class="font-bold text-slate-700 text-sm tracking-tight">${topico}</h3>
-                            <button onclick="reciclarTopico('${materia}', '${topicoSeguro}', event)" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-brand transition-colors">
+                            ${visual.iconHtml}
+                            <h3 class="font-bold ${visual.textColor} text-sm tracking-tight">${topico}</h3>
+                            <button onclick="reciclarTopico('${matAlvo}', '${topicoSeguro}', event)" class="w-5 h-5 flex items-center justify-center text-slate-300 hover:text-brand transition-colors">
                                 <i class="fa-solid fa-rotate-right text-[10px]"></i>
                             </button>
                         </div>
                         <div class="flex items-center gap-3">
-                            <div class="w-24 bg-slate-100 rounded-full h-1.5 overflow-hidden">
-                                <div class="bg-brand h-1.5 rounded-full transition-all duration-500" style="width: ${acc}%"></div>
+                            <div class="w-24 bg-slate-200/50 rounded-full h-1.5 overflow-hidden">
+                                <div class="${visual.barColor} h-1.5 rounded-full transition-all duration-500" style="width: ${acc}%"></div>
                             </div>
                             <span class="text-[10px] font-black text-slate-400">${acc}%</span>
                         </div>
                     </div>
-                    <i id="${chevronId}" class="fa-solid fa-chevron-down text-slate-300 text-xs transition-transform duration-300 ml-4"></i>
+                    <i id="${chevronId}" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform duration-300 ml-4"></i>
                 </div>
-
-                <div id="${cardId}" class="hidden border-t border-slate-50 bg-slate-50/30">
+                <div id="${cardId}" class="hidden border-t border-slate-100 bg-white">
                     <div class="p-4 space-y-4">
                         <div class="grid grid-cols-2 gap-3 h-32">
-                            <div class="bg-white rounded-xl border border-slate-100 flex flex-col items-center justify-center text-center p-3 shadow-sm">
+                            <div class="bg-slate-50 rounded-xl border border-slate-100 flex flex-col items-center justify-center text-center p-3 shadow-inner">
                                 <span class="text-[7px] font-black uppercase text-slate-400 tracking-widest mb-2">Último Acesso</span>
                                 <div class="${status.classe} text-2xl mb-1"><i class="${status.icone}"></i></div>
                                 <span class="text-[10px] font-black ${status.classe} uppercase tracking-tight">${status.dias === '---' ? 'Inédito' : status.dias + ' Dias'}</span>
-                                <div class="mt-1.5 text-[7px] font-bold text-slate-300 uppercase">${statsTopic.total} realizadas</div>
+                                <div class="mt-1.5 text-[7px] font-bold text-slate-400 uppercase">${statsTopic.total} realizadas</div>
                             </div>
                             <div class="bg-white p-3 rounded-xl border border-slate-100 shadow-sm relative overflow-hidden flex flex-col">
                                 <span class="text-[7px] font-black uppercase text-slate-400 tracking-widest mb-1">Evolução</span>
@@ -3573,22 +4351,20 @@ function iniciarReforcoInteligente(materia, topicoRecebido) {
                                 </div>
                             </div>
                         </div>
-                        
                         <div id="diag-area-${index}" class="space-y-3">
                             <button id="btn-diag-${index}" onclick="gerarDiagnosticoVilao('${topicoSeguro}', '${index}')" class="w-full py-2.5 rounded-xl border border-brand/20 bg-white text-brand font-bold text-[9px] uppercase tracking-widest hover:bg-brand hover:text-white transition-all flex items-center justify-center gap-2 shadow-sm">
                                 <i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Diagnóstico de Performance
                             </button>
                             <div id="insight-box-${index}" class="hidden animate-fade-in"></div>
                         </div>
-
                         <div class="grid grid-cols-3 gap-2 pt-1">
-                            <button onclick="abrirMapaMental('${topicoSeguro}')" class="py-3 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-[9px] uppercase tracking-wider hover:bg-slate-50 transition shadow-sm flex flex-col items-center justify-center gap-1">
+                            <button onclick="abrirMapaMental('${topicoSeguro}')" class="py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-[9px] uppercase tracking-wider hover:bg-white transition shadow-sm flex flex-col items-center justify-center gap-1 active:scale-95">
                                 <i class="fa-solid fa-book-open text-slate-400 text-base"></i> Mapa
                             </button>
-                            <button onclick="treinarAssuntoEspecifico('${topicoSeguro}', 'flashcards', 'dashboard')" class="py-3 rounded-xl bg-white border border-slate-200 text-slate-500 font-bold text-[9px] uppercase tracking-wider hover:bg-slate-50 transition shadow-sm flex flex-col items-center justify-center gap-1">
+                            <button onclick="treinarAssuntoEspecifico('${topicoSeguro}', 'flashcards', 'dashboard')" class="py-3 rounded-xl bg-slate-50 border border-slate-200 text-slate-500 font-bold text-[9px] uppercase tracking-wider hover:bg-white transition shadow-sm flex flex-col items-center justify-center gap-1 active:scale-95">
                                 <i class="fa-solid fa-layer-group text-slate-400 text-base"></i> Cards
                             </button>
-                            <button onclick="treinarAssuntoEspecifico('${topicoSeguro}', 'questions', 'dashboard')" class="py-3 rounded-xl bg-brand text-white font-bold text-[9px] uppercase tracking-wider hover:opacity-90 transition shadow-md shadow-brand/10 flex flex-col items-center justify-center gap-1">
+                            <button onclick="treinarAssuntoEspecifico('${topicoSeguro}', 'questions', 'dashboard')" class="py-3 rounded-xl bg-brand text-white font-bold text-[9px] uppercase tracking-wider hover:bg-brand-dark transition shadow-md shadow-brand/10 flex flex-col items-center justify-center gap-1 active:scale-95">
                                 <i class="fa-solid fa-pen text-base"></i> Questões
                             </button>
                         </div>
@@ -3596,7 +4372,6 @@ function iniciarReforcoInteligente(materia, topicoRecebido) {
                 </div>
             `;
             fragment.appendChild(div);
-
             setTimeout(() => renderizarGraficoCheckpointsOFFLINE(index, logsDesteTopico), 0);
         });
         
@@ -4332,130 +5107,181 @@ async function iniciarSimuladoDiretoDeTopico(topico, origem) {
 }
 
         function renderizarListaQuestoes() {
-            const container = document.getElementById('qt-list-container');
-            container.innerHTML = '';
-            const todasQuestoes = getBancoCombinado();
-            let lista = [];
-            if (modoFavoritos) {
-                lista = todasQuestoes.filter(q => ESTADO.favoritos.includes(q.id));
-                if (lista.length === 0) { container.innerHTML = `<div class="text-center text-slate-400 mt-10"><i class="fa-regular fa-star text-4xl mb-2"></i><p>Nenhuma questão favorita.</p></div>`; return; }
-            } else { lista = questoesTreinoAtuais; }
-            questoesTreinoAtuais = lista;
-            if (questoesTreinoAtuais.length === 0) { container.innerHTML = `<div class="text-center text-slate-400 mt-10"><i class="fa-regular fa-star text-4xl mb-2"></i><p>Nenhuma questão encontrada para este tópico.</p></div>`; return; }
-            const totalPaginas = Math.ceil(questoesTreinoAtuais.length / ITENS_POR_PAGINA);
-            const inicio = (paginaAtualQuestoes - 1) * ITENS_POR_PAGINA;
-            const fim = inicio + ITENS_POR_PAGINA;
-            const listaPagina = questoesTreinoAtuais.slice(inicio, fim);
-            const criarNav = () => `<div class="flex items-center justify-between mb-4 mt-2 px-2"><button onclick="mudarPaginaQuestoes(-1)" ${paginaAtualQuestoes === 1 ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-brand hover:scale-110 transition"'}><i class="fa-solid fa-chevron-left text-xl"></i></button><span class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm">Pág ${paginaAtualQuestoes} / ${totalPaginas}</span><button onclick="mudarPaginaQuestoes(1)" ${paginaAtualQuestoes >= totalPaginas ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-brand hover:scale-110 transition"'}><i class="fa-solid fa-chevron-right text-xl"></i></button></div>`;
-            container.innerHTML += criarNav();
-            listaPagina.forEach((q, loopIndex) => {
-                try {
-                    if (!q || !q.alternativas || !Array.isArray(q.alternativas)) { return; }
-                    const globalIndex = inicio + loopIndex; 
-                    const enunciadoFormatado = q.enunciado.replace(/\[.*?\]\s*|<span.*?>.*?<\/span>\s*/gi, "");
-                    const card = document.createElement('div');
-                    // ADICIONADO: classe 'card-questao-observavel' e atributo 'data-id'
-                    card.className = "card-questao-observavel bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6";
-                    card.setAttribute('data-id', q.id); 
-                    card.id = `q-card-${globalIndex}`;
-                    const isFav = ESTADO.favoritos.includes(q.id);
-                    const starClass = isFav ? "fa-solid fa-star text-yellow-400" : "fa-regular fa-star text-slate-400";
-                    let header = `<div class="flex justify-between items-start p-4 border-b border-slate-50"><div><span class="text-[10px] font-bold text-brand uppercase tracking-widest block mb-1">${q.materia || 'Geral'}</span><span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">${q.topico || 'Geral'}</span></div><div class="flex items-center gap-1"><button onclick="toggleFavorito('${q.id}')" class="p-2 hover:scale-110 transition-transform"><i class="${starClass} text-xl"></i></button><button <button onclick="abrirDrawerResolucao('${encodeURIComponent(q.resolucao || '')}', '${q.id}')" class="p-2 text-slate-300 hover:text-yellow-400 transition-colors" title="Ver Resolução"><i class="fa-solid fa-lightbulb text-xl"></i></button></div></div><div class="p-5"><div class="text-slate-800 font-medium text-lg leading-relaxed math-content mb-4">${enunciadoFormatado}</div><div class="space-y-2" id="opts-container-${globalIndex}">`;
-                    q.alternativas.forEach((alt, altIndex) => {
-                        let btnClass = "w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-left text-slate-600 font-medium hover:bg-white transition-all active:scale-[0.99] text-sm";
-                        if (q.respondida) {
-                            if (altIndex === q.correta) { btnClass = "w-full p-3.5 rounded-xl border-2 border-green-500 bg-green-100 text-green-800 font-bold text-left shadow-sm text-sm"; } 
-                            else if (altIndex === q.userSelected) { btnClass = "w-full p-3.5 rounded-xl border-2 border-red-500 bg-red-100 text-red-800 font-medium text-left text-sm opacity-80"; } 
-                            else { btnClass += " opacity-50 cursor-not-allowed"; }
-                        } else if (q.userSelected === altIndex) { btnClass = "w-full p-3.5 rounded-xl border-2 border-brand bg-brand/10 text-brand-dark font-bold text-left shadow-sm text-sm"; }
-                        const letra = String.fromCharCode(65 + altIndex);
-                        header += `<button id="btn-${globalIndex}-${altIndex}" onclick="selecionarAlternativaUI(${globalIndex}, ${altIndex})" ${q.respondida ? 'disabled' : ''} class="${btnClass}"><div class="flex items-center gap-3"><div class="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs font-bold flex-none">${letra}</div><span>${alt}</span></div></button>`;
-                    });
-                    header += `</div>`; 
-                    const btnDisabled = (q.userSelected === null);
-                    const btnDisplay = q.respondida ? 'hidden' : 'block';
-                    const btnStyle = btnDisabled ? "bg-slate-200 text-slate-400 cursor-not-allowed" : "bg-brand text-white hover:bg-brand-dark shadow-lg active:scale-[0.98]";
-                    // --- MUDANÇA 2: NOVOS BOTÕES DE DIAGNÓSTICO ---
-                    // --- SLIDER DE CONFIANÇA (ARRASTAR) ---
-                    // --- SLIDER DE CONFIANÇA (VISUAL LIMPO V2) ---
-                    // --- SLIDER COM ESTADO "DORMINDO" ---
-                    const confiancaHtml = `
-                        <div id="container-slider-${globalIndex}" class="hidden mb-6 px-2 transition-all duration-500 ease-out opacity-0 translate-y-2">
-                            
-                            <div class="flex justify-between text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-widest transition-colors" id="labels-conf-${globalIndex}">
-                                <span>Chute</span>
-                                <span>Dúvida</span>
-                                <span>Certeza</span>
-                            </div>
-                            
-                            <div class="relative w-full h-5 select-none touch-none group">
-                                
-                                <div class="absolute top-0 left-0 w-full h-full rounded-full bg-slate-200 shadow-inner border border-slate-200"></div>
+    const container = document.getElementById('qt-list-container');
+    container.innerHTML = '';
+    
+    // 1. Definição da Lista Base
+    let lista = [];
+    const todas = getBancoCombinado();
+    
+    if (modoFavoritos) {
+        lista = todas.filter(q => ESTADO.favoritos.includes(q.id));
+        document.getElementById('qt-title').innerHTML = `<i class="fa-solid fa-star text-yellow-400 mr-1"></i> FAVORITAS`;
+    } else {
+        lista = questoesTreinoAtuais;
+    }
+    
+    questoesTreinoAtuais = lista;
 
-                                <div id="gradient-conf-${globalIndex}" class="absolute top-0 left-0 w-full h-full rounded-full overflow-hidden opacity-0 transition-opacity duration-300">
-                                    <div class="w-full h-full opacity-60" 
-                                         style="background: linear-gradient(to right, #f87171, #facc15, #4ade80);">
-                                    </div>
-                                </div>
+    // 2. Validação de Vazio
+    if (questoesTreinoAtuais.length === 0) { 
+        container.innerHTML = `<div class="text-center text-slate-400 mt-10"><i class="fa-regular fa-folder-open text-4xl mb-2"></i><p>Nenhuma questão encontrada.</p></div>`; 
+        return; 
+    }
 
-                                <input type="range" min="0" max="100" value="50" step="1"
-                                    id="range-conf-${globalIndex}"
-                                    oninput="atualizarSliderVisual(${globalIndex}, this.value)"
-                                    class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-20">
+    // 3. Paginação
+    const totalPaginas = Math.ceil(questoesTreinoAtuais.length / ITENS_POR_PAGINA);
+    const inicio = (paginaAtualQuestoes - 1) * ITENS_POR_PAGINA;
+    const fim = inicio + ITENS_POR_PAGINA;
+    const listaPagina = questoesTreinoAtuais.slice(inicio, fim);
 
-                                <div id="thumb-visual-${globalIndex}" 
-                                     class="absolute top-1/2 -translate-y-1/2 w-7 h-7 bg-slate-100 rounded-full shadow-sm border border-slate-300 z-10 pointer-events-none transition-all duration-200 flex items-center justify-center text-slate-300"
-                                     style="left: 50%; transform: translate(-50%, -50%); scale: 0.9;">
-                                     <i class="fa-solid fa-minus text-[10px]"></i>
-                                </div>
-                            </div>
-                        </div>
-                    `;
+    // Navegação Topo
+    const criarNav = () => `<div class="flex items-center justify-between mb-4 mt-2 px-2"><button onclick="mudarPaginaQuestoes(-1)" ${paginaAtualQuestoes === 1 ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-brand hover:scale-110 transition"'}><i class="fa-solid fa-chevron-left text-xl"></i></button><span class="text-xs font-bold text-slate-400 uppercase tracking-widest bg-white border border-slate-100 px-3 py-1 rounded-full shadow-sm">Pág ${paginaAtualQuestoes} / ${totalPaginas}</span><button onclick="mudarPaginaQuestoes(1)" ${paginaAtualQuestoes >= totalPaginas ? 'disabled class="text-slate-300 cursor-not-allowed"' : 'class="text-brand hover:scale-110 transition"'}><i class="fa-solid fa-chevron-right text-xl"></i></button></div>`;
+    container.innerHTML += criarNav();
 
-                    // Injeta o slider e o botão
-                    // --- CORREÇÃO: INJETA SLIDER + BOTÃO + DIAGNÓSTICO ---
-                    header += `<div class="mt-6 pt-4 border-t border-slate-50 ${btnDisplay}">
-                        ${confiancaHtml}
-                        <button id="btn-confirm-${globalIndex}" onclick="confirmarResposta(${globalIndex})" ${btnDisabled ? 'disabled' : ''} class="w-full py-3 rounded-xl font-bold transition ${btnStyle}">RESPONDER</button>
+    // 4. Renderização dos Cards
+    listaPagina.forEach((q, loopIndex) => {
+        try {
+            if (!q || !q.alternativas) return;
+            
+            const globalIndex = inicio + loopIndex; 
+            const enunciadoFormatado = q.enunciado.replace(/\[.*?\]\s*|<span.*?>.*?<\/span>\s*/gi, "");
+            const card = document.createElement('div');
+            
+            card.className = "card-questao-observavel bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden mb-6";
+            card.setAttribute('data-id', q.id); 
+            card.id = `q-card-${globalIndex}`;
+            
+            // Lógica da Estrela (Cinza default, Amarela se fav)
+            const isFav = ESTADO.favoritos.includes(q.id);
+            const starClass = isFav ? "fa-solid fa-star text-yellow-400" : "fa-regular fa-star text-slate-400 group-hover:text-yellow-400";
+
+            // --- CÁLCULO DE DICAS (CORRIGIDO) ---
+            let qtdDicas = 1; // Padrão
+            try {
+                // Busca erros totais do tópico
+                const s = ESTADO.statsPorAssunto[q.topico];
+                const nErros = s ? (s.total - s.acertos) : 0;
+                // Chama a função global definida na Parte 1
+                const saldo = calcularSaldoDicas(q.topico, nErros);
+                qtdDicas = saldo.qtd;
+            } catch(e) { console.log("Erro calc dicas:", e); }
+
+            // Verifica quantas já usou (memória da questão)
+            const usadas = q.dicasUsadas || 0;
+            const restantes = Math.max(0, qtdDicas - usadas);
+
+            // Ícone Resolução (Lâmpada ou Cadeado)
+            const iconRes = q.respondida 
+                ? `<button onclick="abrirDrawerResolucao('${encodeURIComponent(q.resolucao || '')}', '${q.id}')" class="p-2 btn-unlocked hover:bg-yellow-50 rounded-full transition-colors" title="Ver Resolução"><i class="fa-solid fa-lightbulb text-xl"></i></button>`
+                : `<button onclick="mostrarToast('🔒 Responda para liberar a resolução!')" class="p-2 btn-locked" title="Bloqueado"><i class="fa-solid fa-lock text-lg"></i></button>`;
+
+            // --- HEADER LIMPO (SEM DUPLICIDADE) ---
+            let header = `
+                <div class="flex justify-between items-start p-4 border-b border-slate-50 relative bg-white">
+                    <div>
+                        <span class="text-[10px] font-bold text-brand uppercase tracking-widest block mb-1">${q.materia || 'Geral'}</span>
+                        <span class="text-xs font-bold text-slate-400 bg-slate-100 px-2 py-1 rounded">${q.topico || 'Geral'}</span>
                     </div>
                     
-                    <div id="diagnostico-container-${globalIndex}" class="hidden mt-4 pt-4 border-t border-slate-100 animate-fade-in">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 text-center">O que houve?</p>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button onclick="registrarDiagnostico(${globalIndex}, 'formula')" id="btn-diag-${globalIndex}-formula" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Esqueci a fórmula</button>
-                            <button onclick="registrarDiagnostico(${globalIndex}, 'conta')" id="btn-diag-${globalIndex}-conta" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Errei conta</button>
-                            <button onclick="registrarDiagnostico(${globalIndex}, 'interpretacao')" id="btn-diag-${globalIndex}-interpretacao" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Interpretei errado</button>
-                            <button onclick="registrarDiagnostico(${globalIndex}, 'conceito')" id="btn-diag-${globalIndex}-conceito" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Erro conceitual</button>
+                    <div class="flex items-center gap-2">
+                        
+                        <div class="relative">
+                            <button onclick="solicitarHintVisual('${globalIndex}')" class="p-2 btn-hint rounded-full hover:bg-slate-50" ${restantes === 0 ? 'disabled style="opacity:0.4"' : ''} title="Pedir Dica">
+                                <i class="fa-regular fa-compass text-xl"></i>
+                            </button>
+                            ${restantes > 0 ? `<div class="hint-badge">${restantes}</div>` : ''}
                         </div>
-                    </div>`;
 
-                    // ... dentro do loop listaPagina.forEach ...
-let seloRematch = '';
-if (q.isRematch) {
-    seloRematch = `<div class="bg-red-50 border-b border-red-100 p-2 flex items-center justify-center gap-2 text-[10px] font-bold text-red-600 uppercase tracking-widest">
-        <i class="fa-solid fa-fire animate-pulse"></i> Revanche Histórica 
-        <i class="fa-solid fa-shield-halved ml-1"></i>
-    </div>`;
-}
+                        <button onclick="toggleFavorito('${q.id}')" class="p-2 hover:scale-110 transition-transform group">
+                            <i class="${starClass} text-xl transition-colors"></i>
+                        </button>
 
-// Ao montar o HTML do card, insira ${seloRematch} antes do header
-card.innerHTML = `${seloRematch} ${header}`;
-// ... resto da função ...
-                    container.appendChild(card);
-                } catch (e) { console.error("Erro ao renderizar questão", e); }
+                        <div class="w-px h-6 bg-slate-100 mx-1"></div>
+
+                        <div id="lock-container-${globalIndex}">
+                            ${iconRes}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-5">
+                    <div id="hint-area-${globalIndex}" class="hidden"></div>
+
+                    <div class="text-slate-800 font-medium text-lg leading-relaxed math-content mb-4">${enunciadoFormatado}</div>
+                    <div class="space-y-2" id="opts-container-${globalIndex}">
+            `;
+
+            // Loop Alternativas
+            q.alternativas.forEach((alt, altIndex) => {
+                let btnClass = "w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50 text-left text-slate-600 font-medium hover:bg-white transition-all active:scale-[0.99] text-sm";
+                if (q.respondida) {
+                    if (altIndex === q.correta) { btnClass = "w-full p-3.5 rounded-xl border-2 border-green-500 bg-green-100 text-green-800 font-bold text-left shadow-sm text-sm"; } 
+                    else if (altIndex === q.userSelected) { btnClass = "w-full p-3.5 rounded-xl border-2 border-red-500 bg-red-100 text-red-800 font-medium text-left text-sm opacity-80"; } 
+                    else { btnClass += " opacity-50 cursor-not-allowed"; }
+                } else if (q.userSelected === altIndex) { btnClass = "w-full p-3.5 rounded-xl border-2 border-brand bg-brand/10 text-brand-dark font-bold text-left shadow-sm text-sm"; }
+                
+                const letra = String.fromCharCode(65 + altIndex);
+                header += `<button id="btn-${globalIndex}-${altIndex}" onclick="selecionarAlternativaUI(${globalIndex}, ${altIndex})" ${q.respondida ? 'disabled' : ''} class="${btnClass}"><div class="flex items-center gap-3"><div class="w-6 h-6 rounded-full border border-current flex items-center justify-center text-xs font-bold flex-none">${letra}</div><span>${alt}</span></div></button>`;
             });
-            container.innerHTML += criarNav();
-            
-            mapaFocoQuestoes = {}; // Reseta a memória de foco ao mudar de página/filtro
+            header += `</div>`; 
 
-            setTimeout(() => { 
-                if (window.MathJax) { try { MathJax.typesetPromise([container]); } catch (e) {} } 
-                
-                // DISPARA O OLHO DO JUIZ
-                iniciarObservadorDeLista();
-                
-            }, 100);
-        }
+            // Footer (Confiança + Botão Responder + Diagnóstico)
+            const btnDisabled = (q.userSelected === null);
+            const btnDisplay = q.respondida ? 'hidden' : 'block';
+            const btnStyle = btnDisabled ? "bg-slate-200 text-slate-400 cursor-not-allowed" : "bg-brand text-white hover:bg-brand-dark shadow-lg active:scale-[0.98]";
+            
+            // Slider (Oculto até selecionar)
+            const confiancaHtml = `
+                <div id="container-slider-${globalIndex}" class="hidden mb-6 px-2 transition-all duration-500 ease-out opacity-0 translate-y-2">
+                    <div class="flex justify-between text-[10px] font-bold text-slate-300 mb-1 uppercase tracking-widest transition-colors" id="labels-conf-${globalIndex}">
+                        <span>Chute</span><span>Dúvida</span><span>Certeza</span>
+                    </div>
+                    <div class="relative w-full h-5 select-none touch-none group">
+                        <div class="absolute top-0 left-0 w-full h-full rounded-full bg-slate-200 shadow-inner border border-slate-200"></div>
+                        <div id="gradient-conf-${globalIndex}" class="absolute top-0 left-0 w-full h-full rounded-full overflow-hidden opacity-0 transition-opacity duration-300">
+                            <div class="w-full h-full opacity-60" style="background: linear-gradient(to right, #f87171, #facc15, #4ade80);"></div>
+                        </div>
+                        <input type="range" min="0" max="100" value="50" step="1" id="range-conf-${globalIndex}" oninput="atualizarSliderVisual(${globalIndex}, this.value)" class="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer z-20">
+                        <div id="thumb-visual-${globalIndex}" class="absolute top-1/2 -translate-y-1/2 w-7 h-7 bg-slate-100 rounded-full shadow-sm border border-slate-300 z-10 pointer-events-none transition-all duration-200 flex items-center justify-center text-slate-300" style="left: 50%; transform: translate(-50%, -50%); scale: 0.9;"><i class="fa-solid fa-minus text-[10px]"></i></div>
+                    </div>
+                </div>
+            `;
+
+            header += `<div class="mt-6 pt-4 border-t border-slate-50 ${btnDisplay}">
+                ${confiancaHtml}
+                <button id="btn-confirm-${globalIndex}" onclick="confirmarResposta(${globalIndex})" ${btnDisabled ? 'disabled' : ''} class="w-full py-3 rounded-xl font-bold transition ${btnStyle}">RESPONDER</button>
+            </div>
+            
+            <div id="diagnostico-container-${globalIndex}" class="hidden mt-4 pt-4 border-t border-slate-100 animate-fade-in">
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 text-center">O que houve?</p>
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="registrarDiagnostico(${globalIndex}, 'formula')" id="btn-diag-${globalIndex}-formula" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Esqueci a fórmula</button>
+                    <button onclick="registrarDiagnostico(${globalIndex}, 'conta')" id="btn-diag-${globalIndex}-conta" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Errei conta</button>
+                    <button onclick="registrarDiagnostico(${globalIndex}, 'interpretacao')" id="btn-diag-${globalIndex}-interpretacao" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Interpretei errado</button>
+                    <button onclick="registrarDiagnostico(${globalIndex}, 'conceito')" id="btn-diag-${globalIndex}-conceito" class="py-2.5 rounded-lg border border-slate-200 text-[10px] font-bold text-slate-500 hover:bg-slate-50 transition active:scale-95">Erro conceitual</button>
+                </div>
+            </div>`;
+
+            // Selo de Revanche
+            let seloRematch = '';
+            if (q.isRematch) {
+                seloRematch = `<div class="bg-red-50 border-b border-red-100 p-2 flex items-center justify-center gap-2 text-[10px] font-bold text-red-600 uppercase tracking-widest"><i class="fa-solid fa-fire animate-pulse"></i> Revanche Histórica <i class="fa-solid fa-shield-halved ml-1"></i></div>`;
+            }
+
+            card.innerHTML = `${seloRematch} ${header}`;
+            container.appendChild(card);
+
+        } catch (e) { console.error("Erro render card", e); }
+    });
+    
+    container.innerHTML += criarNav();
+    mapaFocoQuestoes = {}; 
+    setTimeout(() => { 
+        if (window.MathJax) { try { MathJax.typesetPromise([container]); } catch (e) {} } 
+        iniciarObservadorDeLista();
+    }, 100);
+}
 
         function mudarPaginaQuestoes(delta) {
             const totalPaginas = Math.ceil(questoesTreinoAtuais.length / ITENS_POR_PAGINA);
@@ -4502,6 +5328,124 @@ card.innerHTML = `${seloRematch} ${header}`;
             }
             // -------------------------------------------------------
         }
+
+        async function solicitarHintVisual(indexGlobal) {
+    const q = questoesTreinoAtuais[indexGlobal];
+    const area = document.getElementById(`hint-area-${indexGlobal}`);
+    
+    if (typeof q.dicasUsadas === 'undefined') q.dicasUsadas = 0;
+    
+    // 1. Recalcula o limite atual
+    let limiteData = { qtd: 1, motivo: 'padrao' };
+    try {
+        const s = ESTADO.statsPorAssunto[q.topico];
+        const nErros = s ? (s.total - s.acertos) : 0;
+        limiteData = calcularSaldoDicas(q.topico, nErros);
+    } catch(e) {}
+
+    if (q.dicasUsadas >= limiteData.qtd) {
+        mostrarToast("Você usou todas as dicas disponíveis para esta questão.");
+        return;
+    }
+
+    // 2. Consumo da dica
+    q.dicasUsadas++;
+    const hintIndexAtual = q.dicasUsadas;
+
+    // --- LÓGICA DE REATIVIDADE GLOBAL (A CORREÇÃO) ---
+    // Se o usuário gastou a "Bala de Prata" (2ª dica via Bônus),
+    // zeramos o contador e avisamos TODAS as outras questões imediatamente.
+    if (hintIndexAtual === 2 && limiteData.motivo === 'dna_bonus') {
+        contadorQuestoesSemDicaExtra = 0;
+        console.log("⚡ Bônus de DNA utilizado. Atualizando todas as questões...");
+        atualizarBadgesGlobalmente(); // <--- ESSENCIAL: Remove a dica extra das outras questões
+    } 
+    // Nota: Se não foi bônus, não precisa atualizar globalmente agora, 
+    // a atualização local abaixo cuida do botão atual.
+
+    // 3. Atualização da Interface Local (Badge desta questão)
+    const badge = document.querySelector(`#q-card-${indexGlobal} .hint-badge`);
+    const btn = document.querySelector(`#q-card-${indexGlobal} .btn-hint`);
+    if(badge) {
+        // Recalculamos o saldo visual baseado no limite que foi travado no início da função
+        const novoSaldo = limiteData.qtd - q.dicasUsadas;
+        badge.innerText = novoSaldo;
+        if (novoSaldo <= 0) { 
+            badge.remove(); 
+            btn.disabled = true; 
+            btn.style.opacity = '0.4'; 
+        }
+    }
+
+    // 4. Feedback Visual de Processamento
+    let loaderId = `loader-hint-${indexGlobal}-${hintIndexAtual}`;
+    let loaderHtml = `
+        <div id="${loaderId}" class="hint-box border-slate-200 bg-slate-50 text-slate-400 mt-2">
+            <i class="fa-solid fa-microchip fa-bounce text-brand mt-0.5"></i>
+            <span>O Mentor está analisando o Nível ${hintIndexAtual}...</span>
+        </div>
+    `;
+
+    if (hintIndexAtual === 1) {
+        area.classList.remove('hidden');
+        area.innerHTML = loaderHtml;
+    } else {
+        area.insertAdjacentHTML('beforeend', loaderHtml);
+    }
+
+    // 5. Preparação do Contexto da IA
+    const pilarData = obterPilarFracoParaHint(q.materia, q.topico);
+    const textoAlternativas = q.alternativas
+        .map((alt, i) => `${String.fromCharCode(65+i)}) ${alt}`)
+        .join('\n');
+
+    const promptFinal = PROMPT_HINT_SOCRATIC
+        .replace("{pilarFraco}", pilarData.nome)
+        .replace("{descricaoPilar}", pilarData.desc)
+        .replace("{enunciado}", q.enunciado)
+        .replace("{alternativas}", textoAlternativas)
+        .replace(/{hintIndex}/g, hintIndexAtual);
+
+    // 6. Chamada à Edge Function
+    try {
+        if (!supabaseClient) throw new Error("Offline");
+
+        const { data, error } = await supabaseClient.functions.invoke('chat-tutor', {
+            body: { messages: [{ role: "system", content: promptFinal }] }
+        });
+
+        if (error) throw error;
+        
+        const dicaGerada = data.reply.replace(/"/g, ''); 
+
+        document.getElementById(loaderId)?.remove();
+
+        const estilo = hintIndexAtual === 1 
+            ? { icone: 'fa-eye', titulo: 'Visão (Conceito)', cor: 'text-brand', border: 'border-l-brand' }
+            : { icone: 'fa-calculator', titulo: 'Mecânica (Lógica)', cor: 'text-orange-500', border: 'border-l-orange-400 bg-orange-50/30' };
+
+        const htmlDica = `
+            <div class="hint-box animate-slide-in-right ${estilo.border} mb-2">
+                <i class="fa-solid ${estilo.icone} ${estilo.cor} text-lg mt-0.5 flex-none"></i>
+                <div>
+                    <strong class="block text-[9px] uppercase tracking-widest ${estilo.cor} mb-1">${estilo.titulo}</strong>
+                    <span class="text-slate-700 font-medium text-sm leading-relaxed">"${dicaGerada}"</span>
+                </div>
+            </div>
+        `;
+
+        if (hintIndexAtual === 1) area.innerHTML = htmlDica;
+        else area.insertAdjacentHTML('beforeend', htmlDica);
+        
+        if (window.MathJax) MathJax.typesetPromise([area]);
+
+    } catch (e) {
+        console.error("Erro hint:", e);
+        const loaderEl = document.getElementById(loaderId);
+        if (loaderEl) loaderEl.innerHTML = `<span class="text-red-400 text-xs">O Mentor está offline. Tente novamente.</span>`;
+        q.dicasUsadas--; 
+    }
+}
 
         function registrarDiagnostico(index, motivoNovoDeclarado) {
     console.log("--- INÍCIO DEBUG DIAGNÓSTICO ---");
@@ -4617,7 +5561,7 @@ card.innerHTML = `${seloRematch} ${header}`;
     if (!ESTADO.todosOsLogs) ESTADO.todosOsLogs = [];
     ESTADO.todosOsLogs.push(novoLogLocal);
 
-    // --- LOGICA DE TÓPICOS COM BALDES DE DIFICULDADE (CORREÇÃO) ---
+    // --- LÓGICA DE TÓPICOS COM BALDES DE DIFICULDADE (CORREÇÃO) ---
     if (nomeOficial) {
         const topicoKey = normalizarTexto(nomeOficial); 
         
@@ -4666,6 +5610,24 @@ card.innerHTML = `${seloRematch} ${header}`;
         s.lastTs = Date.now();
     }
 
+    // --- RECARGA DE DICAS (DENTRO DE confirmarResposta) ---
+    if (nomeOficial) {
+        const statsSinc = ESTADO.statsPorAssunto[nomeOficial];
+        const nErrosDica = statsSinc ? (statsSinc.total - statsSinc.acertos) : 0;
+        const ameacaDica = analisarAmeacaVilao(nomeOficial, statsSinc.acertos, statsSinc.total);
+
+        // Só recarrega se tiver DNA Mapeado E não for Vermelho (Vermelho já é infinito)
+        if (nErrosDica >= 20 && ameacaDica.nivel !== 'Crítico') {
+            if (contadorQuestoesSemDicaExtra < 3) {
+                contadorQuestoesSemDicaExtra++;
+                if (contadorQuestoesSemDicaExtra === 3) {
+                    atualizarBadgesGlobalmente();
+                    mostrarToast("Dica Extra recarregada! 💡");
+                }
+            }
+        }
+    }
+
     // Atualiza contadores de matéria
     if (matKey) {
         if (ESTADO.statsPorMateria[matKey]) ESTADO.statsPorMateria[matKey].questoesFeitas++;
@@ -4706,12 +5668,55 @@ card.innerHTML = `${seloRematch} ${header}`;
         acertosSessao++;
         enviarLogDesempenho(q, true, null, null);
         salvarRespostaACIT(q, true);
+        salvarProgressoNuvem();
     } else {
         const diagContainer = document.getElementById(`diagnostico-container-${indexGlobal}`);
         if (diagContainer) diagContainer.classList.remove('hidden');
     }
 
+    // Atualiza o ícone de resolução para desbloqueado
+    const lockContainer = document.getElementById(`lock-container-${indexGlobal}`);
+    if (lockContainer) {
+        lockContainer.innerHTML = `
+            <button onclick="abrirDrawerResolucao('${encodeURIComponent(q.resolucao || '')}', '${q.id}')" class="p-2 btn-unlocked hover:bg-yellow-50 rounded-full transition-colors" title="Ver Resolução">
+                <i class="fa-solid fa-lightbulb text-xl"></i>
+            </button>
+        `;
+    }
+
     salvarDados();
+}
+
+// Salva o progresso do perfil (XP, Nível, Sequência) no Supabase
+async function salvarProgressoNuvem() {
+    if (!supabaseClient) return;
+
+    // 1. Pega os dados vitais da memória local
+    const payload = {
+        xp: ESTADO.usuario.xp,
+        level: ESTADO.usuario.nivel || 1,
+        streak: ESTADO.usuario.sequencia || 0,
+        updated_at: new Date()
+    };
+
+    try {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (!user) return;
+
+        // 2. Envia para a tabela 'profiles'
+        const { error } = await supabaseClient
+            .from('profiles')
+            .update(payload)
+            .eq('id', user.id);
+
+        if (error) throw error;
+        // console.log("☁️ Progresso (XP) sincronizado com a nuvem.");
+
+    } catch (e) {
+        console.error("Erro ao salvar XP na nuvem:", e);
+        // Não alertamos o usuário para não interromper o fluxo, 
+        // tentaremos de novo na próxima chamada.
+    }
 }
 
         function toggleFavorito(id) {
@@ -4980,84 +5985,165 @@ card.innerHTML = `${seloRematch} ${header}`;
         }
 
         function renderCard() {
-            const d = cardsAtuais[cardIndex];
-            document.getElementById('flashcard').classList.remove('flip');
-            document.getElementById('flashcard').classList.remove('card-swipe-in'); 
-            const frontEl = document.getElementById('fc-front'); const backEl = document.getElementById('fc-back');
-            frontEl.innerHTML = d.p; backEl.innerHTML = d.r;
-            MathJax.typesetPromise([frontEl, backEl]);
-            document.getElementById('fc-counter').innerText = `${cardIndex+1}/${cardsAtuais.length}`;
-            const badge = document.getElementById('fc-xp-badge');
-            if(d.userCreated || modoPersonalizado) {
-                badge.className = 'hidden'; 
-                document.getElementById('fc-tag').innerText = "Meu Resumo";
-            } else {
-                const niveis = { 1: { label: 'FÁCIL', color: 'bg-green-100 text-green-700' }, 2: { label: 'MÉDIO', color: 'bg-yellow-100 text-yellow-700' }, 3: { label: 'DIFÍCIL', color: 'bg-red-100 text-red-700' } };
-                const config = niveis[d.nivel] || niveis[1];
-                badge.className = `px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest ${config.color}`;
-                badge.innerText = config.label;
-                document.getElementById('fc-tag').innerText = materiaSelecionada || "Revisão";
-            }
-        }
+    const d = cardsAtuais[cardIndex];
+    const cardEl = document.getElementById('flashcard');
+    const actionsContainer = document.getElementById('actions-container'); 
 
-        function responderFlashcard(acertou) {
-            const cardEl = document.getElementById('flashcard');
-            if (acertou) {
-                cardEl.classList.add('glow-green'); 
-                if (!modoPersonalizado) {
-                    const nextStreak = streakAtual + 1;
-                    if (nextStreak >= 3) { confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } }); } 
-                    else { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); }
-                } else { confetti({ particleCount: 30, spread: 50, origin: { y: 0.6 }, colors: ['#59A6B4'] }); }
-            } else {
-                cardEl.classList.add('glow-red'); 
-                cardEl.classList.add('animate-shake');
-                setTimeout(() => cardEl.classList.remove('animate-shake'), 400);
-            }
-            const delay = acertou ? 650 : 300;
-            setTimeout(() => {
-                cardEl.classList.remove('glow-green', 'glow-red');
-                cardEl.classList.add('card-swipe-out');
-                setTimeout(() => {
-                    const card = cardsAtuais[cardIndex];
-                    if(!modoPersonalizado && materiaSelecionada !== "revisao") {
-                        ESTADO.stats[materiaSelecionada].total++; 
-                        ESTADO.usuario.questoesRespondidas++;
-                        const matKey = normalizarTexto(materiaSelecionada);
-                        if (matKey.includes('mat')) ESTADO.statsPorMateria['matematica'].flashcardsFeitos++;
-                        else if (matKey.includes('fis')) ESTADO.statsPorMateria['fisica'].flashcardsFeitos++;
-                        else if (matKey.includes('qui')) ESTADO.statsPorMateria['quimica'].flashcardsFeitos++;
-                        if (card.topico) {
-                            if (!ESTADO.statsPorAssunto[card.topico]) { ESTADO.statsPorAssunto[card.topico] = { acertos: 0, total: 0 }; }
-                            ESTADO.statsPorAssunto[card.topico].total++;
-                            if (acertou) ESTADO.statsPorAssunto[card.topico].acertos++;
-                        }
-                    }
-                    if(acertou) {
-                        if (!modoPersonalizado) {
-                            let baseXP = (card.nivel === 1) ? 10 : (card.nivel === 2) ? 15 : 20;
-                            if (streakAtual >= 3) { baseXP = baseXP * 2; } 
-                            if(materiaSelecionada !== "revisao") ESTADO.stats[materiaSelecionada].acertos++;
-                            ESTADO.usuario.xp += baseXP; xpSessao += baseXP; acertosSessao++; streakAtual++;
-                            if(modoRevisao) ESTADO.errosPendentes = ESTADO.errosPendentes.filter(id => id !== card.id);
-                        } else { acertosSessao++; }
-                    } else { 
-                        if(!modoPersonalizado && !ESTADO.errosPendentes.includes(card.id)) ESTADO.errosPendentes.push(card.id); 
-                        streakAtual = 0; 
-                    }
-                    salvarDados(); cardIndex++;
-                    if (cardIndex >= cardsAtuais.length) {
-                        mostrarVitoria();
-                        cardEl.classList.remove('card-swipe-out');
-                    } else {
-                        renderCard();
-                        cardEl.classList.remove('card-swipe-out');
-                        cardEl.classList.add('card-swipe-in');
-                        setTimeout(() => cardEl.classList.remove('card-swipe-in'), 300);
-                    }
-                }, 300);
-            }, delay);
+    // Reset visual (Animações de entrada)
+    cardEl.classList.remove('flip', 'card-swipe-out');
+    cardEl.classList.add('card-swipe-in');
+    
+    // --- LÓGICA DO REVESTIMENTO (SKIN) ---
+    // Remove qualquer skin anterior para não acumular
+    cardEl.classList.remove('skin-bronze', 'skin-prata', 'skin-ouro');
+
+    // Define qual skin usar baseada no nível (Se não tiver nível, usa Bronze padrão)
+    let skinClass = 'skin-bronze'; 
+    if (d.nivel === 2) skinClass = 'skin-prata';
+    if (d.nivel === 3) skinClass = 'skin-ouro';
+    
+    // Aplica no container principal
+    cardEl.classList.add(skinClass);
+    // --------------------------------------
+
+    // Esconde botões
+    if(actionsContainer) actionsContainer.classList.add('hidden');
+
+    const frontEl = document.getElementById('fc-front'); 
+    const backEl = document.getElementById('fc-back');
+    frontEl.innerHTML = d.p; 
+    backEl.innerHTML = d.r;
+    
+    MathJax.typesetPromise([frontEl, backEl]);
+    document.getElementById('fc-counter').innerText = `${cardIndex+1}/${cardsAtuais.length}`;
+    
+    const badge = document.getElementById('fc-xp-badge');
+    
+    // Badge Interna (Mantendo a coerência com o revestimento)
+    if(d.userCreated || modoPersonalizado) {
+        badge.className = 'hidden'; 
+        document.getElementById('fc-tag').innerText = "Meu Resumo";
+        cardEl.classList.add('skin-bronze'); // Padrão para cards criados
+    } else {
+        const ranks = { 
+            1: { label: 'BRONZE I', icon: '<i class="fa-solid fa-shield-cat"></i>', color: 'bg-orange-100 text-orange-800 border border-orange-200' }, 
+            2: { label: 'PRATA II', icon: '<i class="fa-solid fa-shield-halved"></i>', color: 'bg-slate-100 text-slate-600 border border-slate-300' }, 
+            3: { label: 'OURO III', icon: '<i class="fa-solid fa-crown"></i>', color: 'bg-yellow-100 text-yellow-700 border border-yellow-300' } 
+        };
+
+        const config = ranks[d.nivel] || ranks[1];
+        
+        badge.className = `px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest flex items-center gap-1.5 shadow-sm ${config.color}`;
+        badge.innerHTML = `${config.icon} ${config.label}`;
+        
+        document.getElementById('fc-tag').innerText = materiaSelecionada || "Combate";
+    }
+
+    setTimeout(() => {
+        if(actionsContainer) {
+            actionsContainer.classList.remove('hidden');
+            actionsContainer.classList.add('fade-in-buttons');
         }
+    }, 600);
+
+    setTimeout(() => cardEl.classList.remove('card-swipe-in'), 400);
+}
+
+        async function responderFlashcard(acertou) {
+    const cardEl = document.getElementById('flashcard');
+    const actionsContainer = document.getElementById('actions-container');
+
+    // 1. UI
+    if(actionsContainer) actionsContainer.classList.add('hidden');
+
+    if (acertou) {
+        cardEl.classList.add('card-pop-success'); 
+        if (!modoPersonalizado) {
+            const nextStreak = streakAtual + 1;
+            if (nextStreak >= 3) { confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } }); } 
+        }
+    } else {
+        cardEl.classList.add('card-shake-error');
+    }
+
+    // --- 2. INTELIGÊNCIA DINÂMICA (NOVO) ---
+    if (acertou) {
+        STREAK_ERRO = 0;          // Zera contador de erro
+        STREAK_DIFICULDADE++;     // Aumenta combo de acerto
+        
+        // GATILHO UPGRADE: 3 Acertos Seguidos
+        if (STREAK_DIFICULDADE === 3) {
+            tentarUpgradeDificuldade();
+            STREAK_DIFICULDADE = 0; // Reseta para exigir novo combo de 3
+        }
+    } else {
+        STREAK_DIFICULDADE = 0;   // Quebrou o combo de acerto
+        STREAK_ERRO++;            // Aumenta combo de erro
+        
+        // GATILHO DOWNGRADE: 2 Erros Seguidos
+        if (STREAK_ERRO === 2) {
+            tentarDowngradeDificuldade();
+            STREAK_ERRO = 0;      // Reseta
+        }
+    }
+    // ----------------------------------------
+
+    // 3. Atualização de Nível (Mantido da sessão anterior)
+    const cardAtual = cardsAtuais[cardIndex];
+    let nivel = cardAtual.mastery_level || 0;
+
+    if (acertou) {
+        nivel++;
+        if(nivel > 3) nivel = 3;
+    } else {
+        nivel = 0; 
+    }
+    cardAtual.mastery_level = nivel;
+
+    // 4. Salvamento Nuvem
+    if (supabaseClient && cardAtual.isOfficial) {
+        const { data: { user } } = await supabaseClient.auth.getUser();
+        if (user) {
+            supabaseClient
+                .from('user_flashcard_progress')
+                .upsert({ 
+                    user_id: user.id, 
+                    flashcard_id: cardAtual.id, 
+                    mastery_level: nivel,
+                    updated_at: new Date()
+                }, { onConflict: 'user_id, flashcard_id' })
+                .then(({ error }) => { if(error) console.error("Erro sync:", error); });
+        }
+    }
+
+    // 5. Transição
+    setTimeout(() => {
+        cardEl.classList.remove('card-pop-success', 'card-shake-error');
+        cardEl.classList.add('card-swipe-out');
+
+        setTimeout(() => {
+            if(!modoPersonalizado && materiaSelecionada !== "revisao") {
+                ESTADO.stats[materiaSelecionada].total++; 
+                ESTADO.usuario.questoesRespondidas++;
+                if(acertou) {
+                     let baseXP = 15; 
+                     if (streakAtual >= 3) baseXP = 30;
+                     ESTADO.usuario.xp += baseXP; xpSessao += baseXP; acertosSessao++; streakAtual++;
+                } else { streakAtual = 0; }
+            } else {
+                if(acertou) acertosSessao++;
+            }
+            salvarDados(); 
+            cardIndex++;
+
+            if (cardIndex >= cardsAtuais.length) {
+                mostrarVitoria();
+            } else {
+                renderCard(); 
+            }
+        }, 250); 
+    }, 700);
+}
 
         function iniciarMapasContexto() { const lista = bancoMapas[materiaSelecionada]; const container = document.getElementById('maps-list-container'); container.innerHTML = ''; lista.forEach(mapa => { const btn = document.createElement('button'); btn.className = 'w-full p-5 bg-white border border-slate-100 shadow-sm rounded-2xl text-left hover:border-brand-dark transition mb-3 group'; btn.innerHTML = `<div class="font-bold text-slate-700 group-hover:text-brand-dark">${mapa.titulo}</div><div class="text-xs text-slate-400 mt-1">${mapa.paginas} págs</div>`; btn.onclick = () => abrirVisualizador(mapa); container.appendChild(btn); }); navTo('screen-maps-list'); }
         let currentMap=null, currentPage=1;
@@ -5633,39 +6719,69 @@ function filtrarTabelaQuestoes() {
 
 // --- FUNÇÃO QUE ENVIA OS DADOS PARA O SUPABASE ---
 async function enviarLogDesempenho(questao, acertou, motivoNome = null, pontosACIT = null, idExistente = null) {
-    if (!supabaseClient) return null;
+    // 1. Verificações de Segurança
+    if (!supabaseClient) {
+        console.warn("⚠️ Supabase não inicializado ou offline.");
+        return null;
+    }
+    
     const { data: { user } } = await supabaseClient.auth.getUser();
-    if (!user) return null;
+    if (!user) {
+        console.error("⛔ Erro: Usuário não logado ao tentar salvar.");
+        return null;
+    }
 
-    // Prepara o pacote de dados
+    // 2. Prepara o pacote de dados (Fidelidade total ao seu código original)
     const payload = {
         user_id: user.id,
-        user_goal: user.user_metadata.target_exam || 'Outros',
+        user_goal: user.user_metadata?.target_exam || 'Outros', // Adicionado ?. para evitar crash se metadata for null
         topico: questao.topico,
-        question_id: questao.id,
+        question_id: String(questao.id), // Força string para evitar erro de tipo no banco
         acertou: acertou,
         motivo_erro: motivoNome,
         selected_alt: questao.userSelected,
         enunciado_curto: questao.enunciado ? questao.enunciado.substring(0, 50) + "..." : "Questão sem texto",
         
-        // --- AQUI ESTÁ A MUDANÇA: SALVANDO OS NÚMEROS ---
-        // Se pontosACIT vier null (acerto), salva 0. Se vier preenchido, salva o valor.
+        // Dados ACIT
         impact_atencao: pontosACIT ? pontosACIT.A : 0,
         impact_conhecimento: pontosACIT ? pontosACIT.C : 0,
         impact_interpretacao: pontosACIT ? pontosACIT.I : 0,
         impact_traducao: pontosACIT ? pontosACIT.T : 0
     };
 
+    console.log("📤 Tentando salvar log no Supabase...", payload);
+
     try {
+        let error = null;
+        let data = null;
+
+        // 3. Execução da Query com Captura de Resposta
         if (idExistente) {
-            await supabaseClient.from('global_performance').update(payload).eq('id', idExistente);
-            return idExistente;
+            // Update
+            const res = await supabaseClient.from('global_performance').update(payload).eq('id', idExistente);
+            error = res.error;
         } else {
-            const { data } = await supabaseClient.from('global_performance').insert([payload]).select();
-            return data ? data[0].id : null;
+            // Insert
+            const res = await supabaseClient.from('global_performance').insert([payload]).select();
+            error = res.error;
+            data = res.data;
         }
+
+        // 4. Verificação Explícita de Erro do Supabase
+        if (error) {
+            throw error; // Joga para o catch abaixo para exibir o alerta
+        }
+
+        console.log("✅ Log salvo com sucesso no Supabase!");
+        return data ? data[0].id : idExistente;
+
     } catch (e) { 
-        console.error("Erro ao salvar log:", e); 
+        console.error("❌ ERRO AO SALVAR LOG:", e);
+        
+        // 5. O ALERTA DE DIAGNÓSTICO
+        // Isso vai aparecer na sua tela se o banco recusar a gravação (ex: RLS Policy)
+        alert(`ERRO DE SALVAMENTO!\nO banco de dados recusou sua resposta.\n\nMotivo: ${e.message || 'Desconhecido'}\nCódigo: ${e.code || 'N/A'}\n\nVerifique as Policies (RLS) no painel do Supabase.`);
+        
         return null; 
     }
 }
@@ -5857,6 +6973,7 @@ async function dispararGeracaoFlashcards() {
     // 4. Verifica sessão no servidor
     let sessaoEncontrada = false;
     
+    
     if (supabaseClient) {
         const { data: { session } } = await supabaseClient.auth.getSession();
         
@@ -5866,6 +6983,7 @@ async function dispararGeracaoFlashcards() {
             
             await carregarInteligenciaArtificial();
             await sincronizarProgressoDoUsuario();
+            await carregarRegrasDeVilao();
             
             // Verifica Admin
             if (session.user.email === "joaoprisco2@gmail.com") {
@@ -5894,6 +7012,8 @@ async function dispararGeracaoFlashcards() {
         // Destrava inputs
         inputs.forEach(i => i.disabled = false);
     }
+
+    
 });
         // --- FUNÇÕES DO SLIDER (SEM LABEL DE TEXTO) ---
         
@@ -5941,32 +7061,32 @@ async function dispararGeracaoFlashcards() {
         }
 
         function classificarGrupos_Real(pontuacaoACIT) {
-    // Usa CACHE_GROUP_THRESHOLDS global
+    // 1. Acesso ao Cache Global
     const thresholds = CACHE_GROUP_THRESHOLDS || [];
     
-    const classificar = (valorRaw) => {
-        if (!thresholds || thresholds.length === 0) return 3;
+    // 2. Sub-função de busca balizada
+    const filtrarPorPilar = (valorRaw, pilarID) => {
+        if (!thresholds || thresholds.length === 0) return 1; // Fallback: Saudável
 
         const valor = Number(valorRaw);
+        
+        // A mágica: procura a linha onde o pilar bate E o valor está no intervalo
         const grupo = thresholds.find(g => {
-            const min = Number(g.min_score);
-            const max = Number(g.max_score);
-            return valor >= min && valor <= max;
+            const pilarBate = g.pillar_code === pilarID;
+            const noIntervalo = valor >= Number(g.min_score) && valor <= Number(g.max_score);
+            return pilarBate && noIntervalo;
         });
         
-        if (grupo) return Number(grupo.level_index);
-
-        const maxTeto = Math.max(...thresholds.map(g => Number(g.max_score)));
-        if (valor > maxTeto) return 3;
-        
-        return 0; 
+        // Retorna o nível (0, 1, 2 ou 3). Se não achar nada, assume 1 (Saudável).
+        return grupo ? Number(grupo.level_index) : 1;
     };
 
+    // 3. Processamento dos 4 Pilares
     return {
-        grupoA: classificar(pontuacaoACIT.A),
-        grupoC: classificar(pontuacaoACIT.C),
-        grupoI: classificar(pontuacaoACIT.I),
-        grupoT: classificar(pontuacaoACIT.T)
+        grupoA: filtrarPorPilar(pontuacaoACIT.A, 'A'),
+        grupoC: filtrarPorPilar(pontuacaoACIT.C, 'C'),
+        grupoI: filtrarPorPilar(pontuacaoACIT.I, 'I'),
+        grupoT: filtrarPorPilar(pontuacaoACIT.T, 'T')
     };
 }
 
@@ -5977,10 +7097,10 @@ async function sincronizarProgressoDoUsuario() {
     if (!user) return;
 
     try {
-        // 1. Busca logs com impactos ACIT incluídos
+        // 1. Busca TUDO (select *) para garantir que venha a coluna 'complexidade'
         const { data: logs, error } = await supabaseClient
             .from('global_performance')
-            .select('question_id, topico, acertou, motivo_erro, created_at, impact_atencao, impact_conhecimento, impact_interpretacao, impact_traducao')
+            .select('*') 
             .eq('user_id', user.id)
             .order('created_at', { ascending: true });
 
@@ -5997,7 +7117,6 @@ async function sincronizarProgressoDoUsuario() {
         materias.forEach(m => {
             ESTADO.stats[m] = { acertos: 0, total: 0, aulasVistas: 0, aulasOportunizadas: 0 };
             ESTADO.statsPorMateria[m] = { questoesFeitas: 0, flashcardsFeitos: 0 };
-            // Inicializa perfil de erros com todas as chaves para evitar undefined
             ESTADO.perfilDeErros[m] = { 
                 geral: { 'formula': 0, 'conta': 0, 'interpretacao': 0, 'conceito': 0, 'pegadinha': 0 }, 
                 topicos: {} 
@@ -6008,17 +7127,19 @@ async function sincronizarProgressoDoUsuario() {
 
         // 2. PROCESSAMENTO DOS LOGS
         logs.forEach(log => {
-            if (!ESTADO.questoesJaVistas.includes(log.question_id)) {
-                ESTADO.questoesJaVistas.push(log.question_id);
+            // Converte ID para string para evitar erro de comparação
+            const qID = String(log.question_id);
+            if (!ESTADO.questoesJaVistas.includes(qID)) {
+                ESTADO.questoesJaVistas.push(qID);
             }
 
             if (log.topico) {
                 const topicoKey = normalizarTexto(log.topico); 
                 if (!ESTADO.cacheLogsPorTopico[topicoKey]) ESTADO.cacheLogsPorTopico[topicoKey] = [];
-                ESTADO.cacheLogsPorTopico[topicoKey].push({ acertou: log.acertou });
+                ESTADO.cacheLogsPorTopico[topicoKey].push({ acertou: log.acertou, created_at: log.created_at });
             }
 
-            let matKey = 'matematica';
+            let matKey = 'matematica'; // Default de segurança
             if (log.topico) {
                 const matReal = getMateriaDoTopico(log.topico);
                 matKey = getMateriaKey(matReal);
@@ -6042,9 +7163,9 @@ async function sincronizarProgressoDoUsuario() {
                 }
                 const s = ESTADO.statsPorAssunto[log.topico];
                 
-                // Como logs antigos não têm dificuldade salva, tratamos como 'medio' (peso 30%)
-                // Isso evita distorcer a base (50%) ou o nível elite (20%) sem dados reais
-                const dif = 'medio';
+                // CORREÇÃO CRÍTICA: Lê a complexidade real do log.
+                // Se for log antigo (sem o campo), assume 'medio'.
+                const dif = log.complexidade || 'medio';
                 
                 s.total++;
                 if (log.acertou) s.acertos++;
@@ -6065,7 +7186,8 @@ async function sincronizarProgressoDoUsuario() {
 
             // Processamento de Erros e Diagnósticos
             if (!log.acertou) {
-                if (!ESTADO.errosPendentes.includes(log.question_id)) ESTADO.errosPendentes.push(log.question_id);
+                if (!ESTADO.errosPendentes.includes(qID)) ESTADO.errosPendentes.push(qID);
+                
                 if (log.motivo_erro) {
                     let m = normalizarTexto(log.motivo_erro).replace('diag', '');
                     const validos = ['conta', 'formula', 'interpretacao', 'conceito', 'pegadinha'];
@@ -6074,9 +7196,11 @@ async function sincronizarProgressoDoUsuario() {
                     if(!ESTADO.perfilDeErros[matKey].geral[m]) ESTADO.perfilDeErros[matKey].geral[m] = 0;
                     ESTADO.perfilDeErros[matKey].geral[m]++;
 
-                    if (!ESTADO.perfilDeErros[matKey].topicos[log.topico]) ESTADO.perfilDeErros[matKey].topicos[log.topico] = {};
-                    if (!ESTADO.perfilDeErros[matKey].topicos[log.topico][m]) ESTADO.perfilDeErros[matKey].topicos[log.topico][m] = 0;
-                    ESTADO.perfilDeErros[matKey].topicos[log.topico][m]++;
+                    if (log.topico) {
+                        if (!ESTADO.perfilDeErros[matKey].topicos[log.topico]) ESTADO.perfilDeErros[matKey].topicos[log.topico] = {};
+                        if (!ESTADO.perfilDeErros[matKey].topicos[log.topico][m]) ESTADO.perfilDeErros[matKey].topicos[log.topico][m] = 0;
+                        ESTADO.perfilDeErros[matKey].topicos[log.topico][m]++;
+                    }
                 }
             }
         });
@@ -6086,7 +7210,7 @@ async function sincronizarProgressoDoUsuario() {
         // Atualiza a UI se estiver no Dashboard
         if (!document.getElementById('screen-dashboard').classList.contains('hidden')) {
             atualizarDashboard();
-            renderizarGraficos();
+            renderizarGraficos(); // Garante o redesenho dos gráficos
         }
     } catch (e) { 
         console.error("Erro na sincronização de histórico:", e); 
@@ -6603,68 +7727,118 @@ function renderizarGraficosGeraisDaMateria_OFFLINE(logsMateria) {
 async function gerarDiagnosticoVilao(topico, index) {
     const btn = document.getElementById(`btn-diag-${index}`);
     const box = document.getElementById(`insight-box-${index}`);
-    
-    // Feedback visual no botão enquanto carrega
     const textoOriginal = btn.innerHTML;
+    
     btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Processando IA...';
     btn.disabled = true;
 
     try {
+        // --- CARREGAMENTO E CÁLCULOS BÁSICOS ---
         const { data: logs } = await supabaseClient.from('global_performance').select('*')
             .eq('user_id', (await supabaseClient.auth.getUser()).data.user.id)
             .eq('topico', topico);
         
         const erros = logs.filter(l => String(l.acertou) === 'false');
-
-        // Validação de dados mínimos
         if (erros.length < 3) {
-            mostrarToast("Pratique mais (mín. 3 erros) para gerar um diagnóstico preciso.");
-            btn.innerHTML = textoOriginal;
-            btn.disabled = false;
-            return;
+            mostrarToast("Pratique mais (mín. 3 erros) para diagnóstico.");
+            btn.innerHTML = textoOriginal; btn.disabled = false; return;
         }
 
-        // Cálculo do ACIT
         let soma = { A: 0, C: 0, I: 0, T: 0 };
         erros.forEach(e => {
-            soma.A += Number(e.impact_atencao || 0);
-            soma.C += Number(e.impact_conhecimento || 0);
-            soma.I += Number(e.impact_interpretacao || 0);
-            soma.T += Number(e.impact_traducao || 0);
+            soma.A += Number(e.impact_atencao || 0); soma.C += Number(e.impact_conhecimento || 0);
+            soma.I += Number(e.impact_interpretacao || 0); soma.T += Number(e.impact_traducao || 0);
         });
 
         const n = erros.length;
         const media = { A: soma.A/n, C: soma.C/n, I: soma.I/n, T: soma.T/n };
         const grupos = classificarGrupos_Real(media);
         const vilao = identificarVilao_Real(grupos);
+        
+        const acc = calcularDesempenhoPonderado(topico);
+        const isDefeated = acc >= 85;
 
-        // Renderiza o Card com o visual "Red/White" (Gradiente Vermelho)
-        box.innerHTML = `
-            <div class="mt-2 bg-gradient-to-r from-red-50 to-white border border-red-100 rounded-2xl p-4 shadow-sm flex items-center justify-between gap-4 relative overflow-hidden animate-pop-in">
-                <div class="absolute -left-4 -top-4 w-16 h-16 bg-red-100/50 rounded-full blur-xl"></div>
-                
-                <div class="flex-1 relative z-10">
-                    <span class="text-[9px] font-bold text-red-400 uppercase tracking-[0.15em] mb-1 flex items-center gap-1">
-                        <i class="fa-solid fa-skull-crossbones text-[8px]"></i> Alvo Detectado
-                    </span>
-                    <h3 class="text-sm font-black text-slate-800 leading-tight mb-1">${vilao.nomeCompleto}</h3>
-                    <p class="text-[9px] text-slate-500 leading-relaxed line-clamp-2 pr-2">${vilao.descricao}</p>
-                </div>
 
-                <button onclick="gerarListaCombateVilao('${topico}')" class="flex-none bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-2.5 px-4 shadow-lg shadow-slate-900/20 border border-slate-700 flex flex-col items-center justify-center gap-0.5 group transition-all active:scale-95">
-                    <i class="fa-solid fa-khanda text-amber-400 text-sm group-hover:scale-110 transition-transform"></i>
-                    <span class="text-[8px] font-bold uppercase tracking-widest text-amber-500/90">Executar</span>
-                </button>
+        // --- LÓGICA INTELIGENTE DE CONFIANÇA ---
+        let confLevel = 1; // 1: Baixo, 2: Médio, 3: Alto
+        let labelStr = "Rastreamento Inicial";
+        let barOpacity = { b2: "opacity-30", b3: "opacity-30" };
+
+        if (n >= 11 && n <= 19) {
+            confLevel = 2; labelStr = "Padrão em Evidência";
+            barOpacity = { b2: "opacity-100", b3: "opacity-30" };
+        } else if (n >= 20) {
+            confLevel = 3; labelStr = "DNA Mapeado";
+            barOpacity = { b2: "opacity-100", b3: "opacity-100" };
+        }
+
+        // Define a cor baseada no estado do vilão (Vivo ou Morto)
+        let confColorClass = "";
+        if (isDefeated) {
+            // Card Verde: Confiança alta é verde forte
+             confColorClass = confLevel === 3 ? "text-green-700 font-bold" : (confLevel === 2 ? "text-green-600" : "text-green-400 opacity-70");
+        } else {
+            // Card Vermelho: Confiança alta é DOURADO BRILHANTE (Glow)
+            confColorClass = confLevel === 3 ? "glow-gold font-bold" : (confLevel === 2 ? "text-red-500" : "text-red-300 opacity-80");
+        }
+
+        // HTML das Barrinhas (reutilizável)
+        const signalHTML = `
+            <div class="flex gap-[2px] items-end h-2.5 w-3.5 mr-1.5 mb-0.5 relative z-20">
+                <div class="w-1 bg-current h-1/3 rounded-[1px] opacity-100"></div>
+                <div class="w-1 bg-current h-2/3 rounded-[1px] ${barOpacity.b2}"></div>
+                <div class="w-1 bg-current h-full rounded-[1px] ${barOpacity.b3}"></div>
             </div>
         `;
         
-        btn.classList.add('hidden'); // Esconde o botão de gerar
-        box.classList.remove('hidden'); // Mostra o card do vilão
+        // HTML do Indicador Completo
+        const indicadorConfianca = `
+            <div class="flex items-center ${confColorClass} text-[9px] uppercase tracking-widest font-medium mb-1 transition-all">
+                ${signalHTML} ${labelStr}
+            </div>
+        `;
+
+
+        // --- RENDERIZAÇÃO DOS CARDS ---
+        if (isDefeated) {
+            // VILÃO DERROTADO (Card Verde)
+            box.innerHTML = `
+                <div class="mt-2 bg-green-50 border border-green-200 rounded-2xl p-4 shadow-inner flex items-center justify-between gap-4 relative overflow-hidden animate-pop-in">
+                    <div class="stamp-dominado">Dominado!</div>
+                    <div class="flex-1 relative z-10 opacity-30 filter blur-[0.4px]">
+                        ${indicadorConfianca}
+                        <h3 class="text-sm font-black text-slate-800 leading-tight mb-1">${vilao.nomeCompleto}</h3>
+                        <p class="text-[9px] text-slate-500 leading-relaxed line-clamp-2">${vilao.descricao}</p>
+                    </div>
+                    <button onclick="gerarListaCombateVilao('${topico}')" class="flex-none bg-green-600 hover:bg-green-700 text-white rounded-xl py-2 px-4 shadow-lg border border-green-700 flex flex-col items-center justify-center gap-0.5 z-40 transition-all active:scale-95">
+                        <i class="fa-solid fa-medal text-sm"></i>
+                        <span class="text-[8px] font-bold uppercase tracking-widest">Treino Elite</span>
+                    </button>
+                    <div class="absolute -left-2 -bottom-2 text-6xl opacity-10 text-green-900 animate-dizzy"><i class="fa-solid fa-skull-crossbones"></i></div>
+                </div>
+            `;
+        } else {
+            // VILÃO ATIVO (Card Vermelho)
+            box.innerHTML = `
+                <div class="mt-2 bg-gradient-to-r from-red-50 to-white border border-red-100 rounded-2xl p-4 shadow-sm flex items-center justify-between gap-4 relative overflow-hidden animate-pop-in">
+                    <div class="absolute -left-4 -top-4 w-16 h-16 bg-red-100/50 rounded-full blur-xl"></div>
+                    <div class="flex-1 relative z-10">
+                        ${indicadorConfianca}
+                        <h3 class="text-sm font-black text-slate-800 leading-tight mb-1">${vilao.nomeCompleto}</h3>
+                        <p class="text-[9px] text-slate-500 leading-relaxed line-clamp-2 pr-2">${vilao.descricao}</p>
+                    </div>
+                    <button onclick="gerarListaCombateVilao('${topico}')" class="flex-none bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-2.5 px-4 shadow-lg shadow-slate-900/20 border border-slate-700 flex flex-col items-center justify-center gap-0.5 group transition-all active:scale-95">
+                        <i class="fa-solid fa-khanda text-amber-400 text-sm group-hover:scale-110 transition-transform"></i>
+                        <span class="text-[8px] font-bold uppercase tracking-widest text-amber-500/90">Executar</span>
+                    </button>
+                </div>
+            `;
+        }
+        
+        btn.classList.add('hidden'); box.classList.remove('hidden');
 
     } catch (e) { 
-        console.error(e);
-        btn.disabled = false;
-        btn.innerHTML = textoOriginal;
+        console.error(e); btn.disabled = false; btn.innerHTML = textoOriginal;
         mostrarToast("Erro ao processar diagnóstico.");
     }
 }
@@ -7705,6 +8879,82 @@ function concluirDiagnostico() {
     
     navTo('screen-dashboard');
     mostrarToast("Diagnóstico salvo! Seu roteiro foi calibrado.");
+}
+
+// --- MOTOR DE REAÇÃO DINÂMICA (A MÁGICA) ---
+
+function tentarUpgradeDificuldade() {
+    // 1. Verifica se temos munição "mais difícil" na reserva
+    const temReserva = POOL_RESERVA.medio.length > 0 || POOL_RESERVA.dificil.length > 0;
+    if (!temReserva) return; 
+
+    // 2. Identifica cards FÁCEIS (Nível 1) que ainda estão na fila para serem jogados fora
+    // (Olhamos do cardIndex + 1 para frente)
+    let indicesParaRemover = [];
+    for (let i = cardIndex + 1; i < cardsAtuais.length; i++) {
+        if (cardsAtuais[i].nivel === 1) { 
+            indicesParaRemover.push(i);
+        }
+    }
+
+    if (indicesParaRemover.length === 0) return; // A fila já está difícil, nada a fazer
+
+    // 3. Troca até 3 cards Fáceis por cards Mais Difíceis
+    const qtdTroca = Math.min(indicesParaRemover.length, 3);
+    let novosCards = [];
+
+    for(let k=0; k<qtdTroca; k++) {
+        // Prioriza puxar do 'Difícil'. Se não tiver, puxa 'Médio'.
+        let novo = POOL_RESERVA.dificil.pop() || POOL_RESERVA.medio.pop();
+        if(novo) novosCards.push(novo);
+    }
+
+    if (novosCards.length > 0) {
+        // Remove os fáceis da fila (de trás para frente para não quebrar os índices)
+        for (let k = qtdTroca - 1; k >= 0; k--) {
+            cardsAtuais.splice(indicesParaRemover[k], 1);
+        }
+        // Injeta os novos no final da fila para manter o fluxo
+        cardsAtuais.push(...novosCards);
+        
+        // Feedback elegante
+        mostrarToast(`<div class="font-bold text-green-600"><i class="fa-solid fa-arrow-trend-up"></i> Nível Subiu!</div><div class="text-xs text-green-700">Substituímos ${novosCards.length} cards fáceis por desafios maiores.</div>`);
+    }
+}
+
+function tentarDowngradeDificuldade() {
+    // 1. Verifica se temos cards fáceis na reserva para "salvar" o aluno
+    if (POOL_RESERVA.facil.length === 0) return;
+
+    // 2. Identifica cards DIFÍCEIS (Nível 3) na fila futura para remover
+    let indicesParaRemover = [];
+    for (let i = cardIndex + 1; i < cardsAtuais.length; i++) {
+        if (cardsAtuais[i].nivel === 3) {
+            indicesParaRemover.push(i);
+        }
+    }
+
+    if (indicesParaRemover.length === 0) return;
+
+    // 3. Troca até 2 cards Difíceis por Fáceis (revisão de base)
+    const qtdTroca = Math.min(indicesParaRemover.length, 2);
+    let novosCards = [];
+
+    for(let k=0; k<qtdTroca; k++) {
+        let novo = POOL_RESERVA.facil.pop(); // Pega da reserva fácil
+        if(novo) novosCards.push(novo);
+    }
+
+    if (novosCards.length > 0) {
+        // Remove os difíceis
+        for (let k = qtdTroca - 1; k >= 0; k--) {
+            cardsAtuais.splice(indicesParaRemover[k], 1);
+        }
+        // Injeta os fáceis
+        cardsAtuais.push(...novosCards);
+
+        mostrarToast(`<div class="font-bold text-blue-500"><i class="fa-solid fa-life-ring"></i> Ajuste de Ritmo</div><div class="text-xs text-blue-600">Trouxe ${novosCards.length} cards de revisão para reforçar a base.</div>`);
+    }
 }
 
     </script>
